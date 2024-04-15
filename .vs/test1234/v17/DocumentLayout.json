@@ -1,0 +1,73 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\KAZAK\\Desktop\\test1234\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F7F4B7CC-ECE5-4FD4-8A3F-936D3DE48F08}|test1234\\test1234.csproj|c:\\users\\kazak\\desktop\\test1234\\test1234\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F7F4B7CC-ECE5-4FD4-8A3F-936D3DE48F08}|test1234\\test1234.csproj|solutionrelative:test1234\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7F4B7CC-ECE5-4FD4-8A3F-936D3DE48F08}|test1234\\test1234.csproj|c:\\users\\kazak\\desktop\\test1234\\test1234\\windows\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7F4B7CC-ECE5-4FD4-8A3F-936D3DE48F08}|test1234\\test1234.csproj|solutionrelative:test1234\\windows\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7F4B7CC-ECE5-4FD4-8A3F-936D3DE48F08}|test1234\\test1234.csproj|c:\\users\\kazak\\desktop\\test1234\\test1234\\windows\\filmwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F7F4B7CC-ECE5-4FD4-8A3F-936D3DE48F08}|test1234\\test1234.csproj|solutionrelative:test1234\\windows\\filmwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "windows\\MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\KAZAK\\Desktop\\test1234\\test1234\\windows\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "test1234\\windows\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\KAZAK\\Desktop\\test1234\\test1234\\windows\\MainWindow.xaml.cs",
+              "RelativeToolTip": "test1234\\windows\\MainWindow.xaml.cs",
+              "ViewState": "AQIAAF0AAAAAAAAAAAAQwHEAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T20:04:32.722Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\KAZAK\\Desktop\\test1234\\test1234\\windows\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "test1234\\windows\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\KAZAK\\Desktop\\test1234\\test1234\\windows\\MainWindow.xaml",
+              "RelativeToolTip": "test1234\\windows\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-15T20:01:57.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FilmWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\KAZAK\\Desktop\\test1234\\test1234\\windows\\FilmWindow.xaml",
+              "RelativeDocumentMoniker": "test1234\\windows\\FilmWindow.xaml",
+              "ToolTip": "C:\\Users\\KAZAK\\Desktop\\test1234\\test1234\\windows\\FilmWindow.xaml",
+              "RelativeToolTip": "test1234\\windows\\FilmWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-15T20:01:54.579Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

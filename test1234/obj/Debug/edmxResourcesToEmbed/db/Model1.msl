@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище OnlineCinema_dataModelContainer" CdmEntityContainer="OnlineCinema_dataEntities">
+    <EntitySetMapping Name="Country">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Currency">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.Currency">
+        <MappingFragment StoreEntitySet="Currency">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CurrencySymb" ColumnName="CurrencySymb" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FilmCountry">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.FilmCountry">
+        <MappingFragment StoreEntitySet="FilmCountry">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FilmGenre">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.FilmGenre">
+        <MappingFragment StoreEntitySet="FilmGenre">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="GenreId" ColumnName="GenreId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FilmLibrary">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.FilmLibrary">
+        <MappingFragment StoreEntitySet="FilmLibrary">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="EnTitle" ColumnName="EnTitle" />
+          <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+          <ScalarProperty Name="ShortDecription" ColumnName="ShortDecription" />
+          <ScalarProperty Name="AgeRestriction" ColumnName="AgeRestriction" />
+          <ScalarProperty Name="WorldPremiereDate" ColumnName="WorldPremiereDate" />
+          <ScalarProperty Name="RussiaPremiereDate" ColumnName="RussiaPremiereDate" />
+          <ScalarProperty Name="BudgetNum" ColumnName="BudgetNum" />
+          <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />
+          <ScalarProperty Name="DurationInMinutes" ColumnName="DurationInMinutes" />
+          <ScalarProperty Name="IsSeries" ColumnName="IsSeries" />
+          <ScalarProperty Name="FilmLink" ColumnName="FilmLink" />
+          <ScalarProperty Name="PromoPosterLink" ColumnName="PromoPosterLink" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FilmProductionStaff">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.FilmProductionStaff">
+        <MappingFragment StoreEntitySet="FilmProductionStaff">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="StaffRoleId" ColumnName="StaffRoleId" />
+          <ScalarProperty Name="ActorRole" ColumnName="ActorRole" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Gender">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.Gender">
+        <MappingFragment StoreEntitySet="Gender">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Genre">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.Genre">
+        <MappingFragment StoreEntitySet="Genre">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionStaff">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.ProductionStaff">
+        <MappingFragment StoreEntitySet="ProductionStaff">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="DeathDate" ColumnName="DeathDate" />
+          <ScalarProperty Name="BirthCountryId" ColumnName="BirthCountryId" />
+          <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromoPoster">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.PromoPoster">
+        <MappingFragment StoreEntitySet="PromoPoster">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="Link" ColumnName="Link" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromoTrailer">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.PromoTrailer">
+        <MappingFragment StoreEntitySet="PromoTrailer">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SeriesEpisode">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.SeriesEpisode">
+        <MappingFragment StoreEntitySet="SeriesEpisode">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+          <ScalarProperty Name="EpisodeNumber" ColumnName="EpisodeNumber" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="EnTitle" ColumnName="EnTitle" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PremiereDate" ColumnName="PremiereDate" />
+          <ScalarProperty Name="DurationInMinutes" ColumnName="DurationInMinutes" />
+          <ScalarProperty Name="EpisodeLink" ColumnName="EpisodeLink" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SeriesSeason">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.SeriesSeason">
+        <MappingFragment StoreEntitySet="SeriesSeason">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="SeasonNumber" ColumnName="SeasonNumber" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="EnTitle" ColumnName="EnTitle" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PremiereDate" ColumnName="PremiereDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffRole">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.StaffRole">
+        <MappingFragment StoreEntitySet="StaffRole">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StarReview">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.StarReview">
+        <MappingFragment StoreEntitySet="StarReview">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserViewId" ColumnName="UserViewId" />
+          <ScalarProperty Name="StarAmount" ColumnName="StarAmount" />
+          <ScalarProperty Name="ReviewTime" ColumnName="ReviewTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TextReview">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.TextReview">
+        <MappingFragment StoreEntitySet="TextReview">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserViewId" ColumnName="UserViewId" />
+          <ScalarProperty Name="ReviewTitle" ColumnName="ReviewTitle" />
+          <ScalarProperty Name="ReviewText" ColumnName="ReviewText" />
+          <ScalarProperty Name="ReviewTime" ColumnName="ReviewTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserData">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.UserData">
+        <MappingFragment StoreEntitySet="UserData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="RegistDate" ColumnName="RegistDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserView">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.UserView">
+        <MappingFragment StoreEntitySet="UserView">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+          <ScalarProperty Name="ViewDate" ColumnName="ViewDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_FilmGenreList">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.View_FilmGenreList">
+        <MappingFragment StoreEntitySet="View_FilmGenreList">
+          <ScalarProperty Name="EnTitle" ColumnName="EnTitle" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Genre" ColumnName="Genre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_MainPageListNum1">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.View_MainPageListNum1">
+        <MappingFragment StoreEntitySet="View_MainPageListNum1">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="EnTitle" ColumnName="EnTitle" />
+          <ScalarProperty Name="PremiereYear" ColumnName="PremiereYear" />
+          <ScalarProperty Name="AgeRestriction" ColumnName="AgeRestriction" />
+          <ScalarProperty Name="IsSeries" ColumnName="IsSeries" />
+          <ScalarProperty Name="Link" ColumnName="Link" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
