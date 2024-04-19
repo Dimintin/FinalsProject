@@ -12,7 +12,6 @@ C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\windows\MainWindow.g.cs
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\windows\TotalResultWindow.g.cs
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\App.g.cs
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234_Content.g.cs
-C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234_MarkupCompile.cache
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234_MarkupCompile.lref
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\App.baml
@@ -26,3 +25,4 @@ C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234.csproj.CoreCompileIn
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234.csproj.Up2Date
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234.exe
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234.pdb
+C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\GeneratedInternalTypeHelper.g.cs

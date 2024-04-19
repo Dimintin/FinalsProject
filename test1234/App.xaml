@@ -25,9 +25,9 @@
                 </Style>
             </Style.Resources>
         </Style>
-        <Style TargetType="TextBlock">
+        <Style TargetType="TextBlock" x:Key="TextBlockStyle">
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
         </Style>
         <Style TargetType="TextBox">

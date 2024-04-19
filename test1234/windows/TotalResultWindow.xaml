@@ -3,23 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:l="clr-namespace:test1234.classes"
         xmlns:local="clr-namespace:test1234.windows"
         mc:Ignorable="d"
         Title="TotalResultWindow" Height="1024" Width="1440"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow">
-    <Grid ScrollViewer.CanContentScroll="True"
-          Panel.ZIndex="1">
+    <Window.Resources>
+        <l:PercentValueConverter x:Key="percentValueConverter"/>
+        <l:nullTextValueToDefaultConverter x:Key="nullToTextConverter"/>
+        <l:UpperToLowerCaseConverter x:Key="ToUpperConverter"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+    </Window.Resources>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10*"/>
-        </Grid.RowDefinitions>
-
+        <!--
+        
+        Window Background
+        
+        -->
         <Grid.Background>
             <ImageBrush ImageSource="..\img\Frame 3 (1).jpg"
                         Stretch="UniformToFill"/>
@@ -36,95 +42,246 @@
             </Border.Background>
         </Border>
 
-        <Grid x:Name="grid_top"
-            Grid.ColumnSpan="2"
-            Background="Black"
-            Opacity="0.9"
-            Grid.Row="0">
-            <DockPanel>
-                <Button x:Name="btn_burgeropen"
-            HorizontalAlignment="Left"
-            Margin="30 0"
-            BorderThickness="0"
-            Background="{x:Null}"
-            Height="40"
-            Width="40"
-            Click="btn_burgeropen_сlick"
-                        DockPanel.Dock="Left">
-                    <Image Source="/img/icons8-menu-50.png"/>
-                </Button>
-                <StackPanel Orientation="Horizontal"
-                Margin="30 20"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center">
-                    <Border BorderThickness="2"
-                            BorderBrush="White"
-                            CornerRadius="10">
+        <!--
+        
+        Main List
+        
+        -->
+
+        <StackPanel Grid.RowSpan="3"
+                    Grid.ColumnSpan="3">
+            <Grid Name="grid_main"  
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--
+                
+                FilmList
+                
+                -->
+                <Grid x:Name="grid_list"
+                      Grid.ColumnSpan="2"
+                      Grid.Row="1"
+                      Height="900">
+                    <StackPanel Margin="30 20"
+                                Name="stackPanel_filmStack">
+                        <Separator Background="White"
+                                            Margin="20 30 20 20"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Width="600"
-                                MaxLines="1"
-                                MaxLength="50"
-                                BorderThickness="0"/>
-                            <Button Name="btn_header_search"
+                            <ListView Name="listview_newItem"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                      d:ItemsSource="{d:SampleData ItemCount=20}"
+                                      Height="{Binding ElementName=grid_list, Path=ActualHeight}"
+                                      Width="{Binding ElementName=stackPanel_filmStack, Path=ActualWidth}">
+                                <ListView.Resources>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                </ListView.Resources>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Width="{Binding ElementName=stackPanel_filmStack, Path=ActualWidth}"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="195"
+                                                  Height="Auto"
+                                                  MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+                                            <Grid.Resources>
+                                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                            </Grid.Resources>
+                                            <DockPanel Margin="10">
+                                                <Image Source="{Binding PromoPosterLink}"
+                                               DockPanel.Dock="Top"/>
+                                                <StackPanel DockPanel.Dock="Bottom"
+                                                       Orientation="Vertical">
+                                                    <TextBlock Text="{Binding Title}"
+                                                       TextWrapping="WrapWithOverflow"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       MaxHeight="60"/>
+                                                    <StackPanel Orientation="Horizontal"
+                                                        Opacity="0.8">
+                                                        <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource nullToTextConverter}, ConverterParameter=ageRest}"
+                                                           Margin="5 0 0 0"
+                                                           FontWeight="Light"/>
+                                                        <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource nullToTextConverter}, ConverterParameter=releaseYear}"
+                                                       DockPanel.Dock="Bottom"
+                                                       FontWeight="Light"
+                                                       TextWrapping="Wrap"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </DockPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <!--
+                
+                Top
+                
+                -->
+                <Grid x:Name="grid_top"
+                    Grid.ColumnSpan="2"
+                    Background="Black"
+                    Opacity="0.9"
+                    Grid.Row="0">
+                    <DockPanel>
+                        <Button x:Name="btn_burgeropen"
+                    HorizontalAlignment="Left"
+                    Margin="30 0"
+                    BorderThickness="0"
+                    Background="{x:Null}"
+                    Height="40"
+                    Width="40"
+                    Click="btn_burgeropen_сlick"
+                                DockPanel.Dock="Left">
+                            <Image Source="/img/icons8-menu-50.png"/>
+                        </Button>
+                        <StackPanel Orientation="Horizontal"
+                        Margin="30 20"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                            <Border BorderThickness="2"
+                                    BorderBrush="White"
+                                    CornerRadius="10">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="button_searchDiscardValue"
+                                            Visibility="Collapsed"
+                                            Click="button_searchDiscardValue_Click">
+                                        <Image Source="/img/icons8-close-50.png" 
+                                               Height="30"
+                                               Margin="5"/>
+                                    </Button>
+                                    <TextBox x:Name="textbox_searchBar"
+                                             Width="600"
+                                        MaxLines="1"
+                                        MaxLength="50"
+                                        BorderThickness="0"
+                                             TextChanged="textbox_searchBar_TextChanged"/>
+                                    <Button Name="btn_header_search"
+                                        Height="40"
+                                        Width="40"
+                                        Margin="5"
+                                        Click="btn_header_search_сlick">
+                                        <Image Source="/img/icons8-search-50.png"/>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </Grid>
+        </StackPanel>
+
+        <!--
+        
+        BurgerMenu
+        
+        -->
+        <Border x:Name="borderBurger"
+                Grid.RowSpan="2"
+                CornerRadius="0 10 10 0"
+                Background="Black"
+                Visibility="Collapsed"
+                Panel.ZIndex="0">
+            <Grid x:Name="GridBurger">
+                <DockPanel>
+                    <StackPanel HorizontalAlignment="Left"
+                                Orientation="Horizontal"
+                                DockPanel.Dock="Top">
+                        <Button x:Name="button_closeBurgerMenu"
                                 Height="40"
                                 Width="40"
-                                Margin="5"
-                                Click="btn_header_search_сlick">
-                                <Image Source="/img/icons8-search-50.png"/>
-                            </Button>
+                                Click="button_closeBurgerMenu_Click"
+                                Margin="30 30 0 0">
+                            <Image Source="/img/icons8-close-50.png" />
+                        </Button>
+                        <TextBlock x:Name="textblock_"
+                                    Text="{Binding Login}">
+                        </TextBlock>
+                        <Button>
+                            <Image Source="{Binding PhotoLink}"/>
+                        </Button>
+                    </StackPanel>
+
+
+                    <StackPanel DockPanel.Dock="Top"
+                                Margin="30 20 0 0">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <Image Source="/img/icons8-home-page-30.png"
+                                   Height="30"
+                                   Margin="5"/>
+                            <TextBlock x:Name="textblock_mainpagelink"
+                                   Text="Главная"
+                                   Margin="5"
+                                   MouseLeftButtonUp="textblock_mainpagelink_MouseLeftButtonUp"/>
                         </StackPanel>
-                    </Border>
-                </StackPanel>
-            </DockPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <Image Source="/img/icons8-movie-24.png"
+                                   Height="30"
+                                   Margin="5"/>
+                            <TextBlock x:Name="textblock_filmlink"
+                                   Text="Фильмы"
+                                   Margin="5"
+                                   MouseLeftButtonUp="textblock_filmlink_Click"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <Image Source="/img/icons8-series-30.png"
+                                   Height="30"
+                                   Margin="5"/>
+                            <TextBlock x:Name="textblock_serieslink"
+                                   Text="Сериалы"
+                                   Margin="5"
+                                   MouseLeftButtonUp="textblock_serieslink_Click"/>
+                        </StackPanel>
+                    </StackPanel>
 
-            
+                    <Separator DockPanel.Dock="Top"
+                               BorderBrush="White"
+                               BorderThickness="2"
+                               Margin="40 20"/>
 
-        </Grid>
-        <Grid Grid.ColumnSpan="10"
-                Grid.Row="2"
-                x:Name="grid_list">
-            <ListView Background="{x:Null}"
-                        d:ItemsSource="{d:SampleData ItemCount=20}"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                      Padding="85 20 85 0"
-                        BorderThickness="0"
-                        Name="listview_item"
-                        Height="900">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid
-                            Width="200"
-                            Height="400"
-                            Margin="0">
-                            <DockPanel Margin="10">
-                                <Image Source="{Binding Link}"
-                                        DockPanel.Dock="Top"
-                                        Width="160"
-                                        Height="230"/>
-                                <WrapPanel DockPanel.Dock="Bottom">
-                                    <TextBlock Text="{Binding Title}"
-                                                TextWrapping="WrapWithOverflow"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding AgeRestriction, StringFormat={}({0}+) }"
-                                                    Margin="5 0 0 0"
-                                                    FontWeight="Light"/>
-                                        <TextBlock Text="{Binding PremiereYear, StringFormat={} {0}г.}"
-                                                    DockPanel.Dock="Bottom"
-                                                    FontWeight="Light"
-                                                    TextWrapping="Wrap"/>
-                                    </StackPanel>
-                                </WrapPanel>
-                            </DockPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+                    <ListView Name="listview_burgerMenu"
+                              d:ItemsSource="{d:SampleData ItemCount=5}"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                              Margin="30 0 0 0"
+                              DockPanel.Dock="Top"
+                              MouseLeftButtonUp="TextBlock_MouseLeftButtonUp">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel HorizontalAlignment="Left"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title, Converter={StaticResource UpperCaseConverter}}"
+                                            Foreground="White"
+                                            Margin="0 5"
+                                            MouseLeftButtonUp="TextBlock_MouseLeftButtonUp">
+                                    <TextBlock.Resources>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                    </TextBlock.Resources>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </DockPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

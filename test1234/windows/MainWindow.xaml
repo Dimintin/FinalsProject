@@ -4,27 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:l="clr-namespace:test1234.classes"
-        xmlns:local="clr-namespace:test1234"
         mc:Ignorable="d"
         Title="MainWindow" Height="1024" Width="1440"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow">
     <Window.Resources>
-        <l:UpperToLowerCaseConverter x:Key="UpperLowerConverter"/>
-        <l:nullTextValueToDefaultConverter x:Key="NullToDefaultConverter"/>
+        <l:PercentValueConverter x:Key="percentValueConverter"/>
+        <l:UpperToLowerCaseConverter x:Key="UpperCaseConverter"/>
+        <l:nullTextValueToDefaultConverter x:Key="NullToTextConverter"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
     </Window.Resources>
-
-    <Grid ScrollViewer.CanContentScroll="True"
-          Panel.ZIndex="1">
-        
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-
-        <!--Window Background-->
-
+        <!--
+        
+        Window Background
+        
+        -->
         <Grid.Background>
             <ImageBrush ImageSource="..\img\Frame 3 (1).jpg"
                         Stretch="UniformToFill"/>
@@ -40,7 +40,13 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-
+        
+        <!--
+        
+        Main List
+        
+        -->
+        
         <StackPanel Grid.RowSpan="3"
                     Grid.ColumnSpan="3">
             <Grid Name="grid_main"  
@@ -52,76 +58,183 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
-                <Grid Grid.Row="1"
-                      Grid.ColumnSpan="10"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Top"
-                      Margin="40">
+                <!--
+                
+                FilmList
+                
+                -->
+                <Grid x:Name="grid_list"
+                      Grid.ColumnSpan="2"
+                      Grid.Row="1"
+                      Height="900">
+                    <ScrollViewer>
+                        <StackPanel Margin="30 20"
+                                Name="stackPanel_filmStack">
+                            <StackPanel>
+                                <TextBlock Text="Новинки"
+                                            FontSize="50"
+                                            Margin="30 20 30 0"/>
+                                <Separator Background="White"
+                                            Margin="20 30"/>
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <Button Width="40"
+                                            Height="40"
+                                            Click="Left_Click">
+                                        <Image Source="/img/icons8-go-back-24.png" />
+                                    </Button>
+                                    <ListView Name="listview_newItem"
+                                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                              Background="{x:Null}"
+                                              d:ItemsSource="{d:SampleData ItemCount=20}"
+                                              HorizontalAlignment="Left"
+                                              BorderThickness="0"
+                                              Height="400"
+                                              Width="{Binding ElementName=stackPanel_filmStack, Path=ActualWidth, Converter={StaticResource percentValueConverter}}">
+                                        <ListView.Resources>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                        </ListView.Resources>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Top"/>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Width="Auto"
+                                                  Height="Auto"
+                                                  MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+                                                    <Grid.Resources>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                                    </Grid.Resources>
+                                                    <DockPanel x:Name="dockPanel_filmData">
+                                                        <Image Source="{Binding PromoPosterLink}"
+                                                               SnapsToDevicePixels="True"
+                                                               VerticalAlignment="Top"
+                                                               Stretch="Uniform"
+                                                               Height="300"
+                                                               Width="280"
+                                                               DockPanel.Dock="Top"
+                                                               HorizontalAlignment="Left"/>
+                                                        <StackPanel DockPanel.Dock="Bottom"
+                                                                    Orientation="Vertical"
+                                                                    HorizontalAlignment="Left">
+                                                            <TextBlock Text="{Binding Title}"
+                                                                       TextWrapping="WrapWithOverflow"
+                                                                       TextTrimming="CharacterEllipsis"
+                                                                       MaxHeight="60"/>
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        Opacity="0.8">
+                                                                <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource NullToTextConverter}, ConverterParameter=ageRest}"
+                                                                            Margin="5 0 0 0"
+                                                                            FontWeight="Light"/>
+                                                                <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToTextConverter}, ConverterParameter=releaseYear}"
+                                                                            DockPanel.Dock="Bottom"
+                                                                            FontWeight="Light"
+                                                                            TextWrapping="Wrap"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DockPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <Button Width="40"
+                                Height="40"
+                                FontSize="20"
+                                Click="Right_Click">
+                                        <Image Source="/img/icons8-circled-right-24.png" />
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Новинки"
+                                            FontSize="50"
+                                            Margin="30 20 30 0"/>
+                                <Separator Background="White"
+                                            Margin="20 30"/>
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <Button Width="40"
+                                            Height="40"
+                                            Click="Left_Click">
+                                        <Image Source="/img/icons8-go-back-24.png" />
+                                    </Button>
+                                    <ListView Name="listview_favItem"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                      Background="{x:Null}"
+                                      d:ItemsSource="{d:SampleData ItemCount=20}"
+                                      HorizontalAlignment="Left"
+                                      BorderThickness="0"
+                                      Height="400"
+                                          Width="{Binding ElementName=stackPanel_filmStack, Path=ActualWidth, Converter={StaticResource percentValueConverter}}">
+                                        <ListView.Resources>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                        </ListView.Resources>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Top"/>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Width="200"
+                                                  Height="Auto"
+                                                  MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+                                                    <Grid.Resources>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                                    </Grid.Resources>
+                                                    <DockPanel Margin="10">
+                                                        <Image Source="{Binding PromoPosterLink}"
+                                               DockPanel.Dock="Top"/>
+                                                        <StackPanel DockPanel.Dock="Bottom"
+                                                       Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Title}"
+                                                       TextWrapping="WrapWithOverflow"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       MaxHeight="60"/>
+                                                            <StackPanel Orientation="Horizontal"
+                                                        Opacity="0.8">
+                                                                <TextBlock Text="{Binding AgeRestriction}"
+                                                           Margin="5 0 0 0"
+                                                           FontWeight="Light"/>
+                                                                <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToTextConverter}, ConverterParameter=releaseDate}"
+                                                       DockPanel.Dock="Bottom"
+                                                       FontWeight="Light"
+                                                       TextWrapping="Wrap"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DockPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <Button Width="40"
+                                Height="40"
+                                FontSize="20"
+                                Click="Right_Click">
+                                        <Image Source="/img/icons8-circled-right-24.png" />
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
-
-                <!--FilmList-->
-
-                <Grid Grid.ColumnSpan="2"
-                        Grid.Row="1"
-                        x:Name="grid_list">
-                    <TextBlock x:Name="textblock_emplyListWarning"
-                               Text="Здесь ничего нет..."
-                               HorizontalAlignment="Center"
-                               Margin="30"
-                               FontSize="40"
-                               Visibility="Collapsed"/>
-                    <ListView Background="{x:Null}"
-                              d:ItemsSource="{d:SampleData ItemCount=20}"
-                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                              HorizontalAlignment="Center"
-                              Padding="85 0 85 0"
-                              BorderThickness="0"
-                              Name="listview_item"
-                              Height="900">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid
-                                    Width="200"
-                                    Height="380"
-                                    Margin="0"
-                                    MouseLeftButtonUp="Grid_MouseLeftButtonUp">
-                                    <DockPanel Margin="20">
-                                        <Image Source="{Binding PromoPosterLink}"
-                                               DockPanel.Dock="Top"
-                                               Width="160"
-                                               Height="230"/>
-                                        <StackPanel DockPanel.Dock="Bottom"
-                                                   Orientation="Vertical">
-                                            <TextBlock Text="{Binding Title}"
-                                                       TextWrapping="WrapWithOverflow"/>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource NullToDefaultConverter}, ConverterParameter=ageRest}"
-                                                       Margin="5 0 0 0"
-                                                       FontWeight="Light"/>
-                                                <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToDefaultConverter}, ConverterParameter=releaseYear}"
-                                                   DockPanel.Dock="Bottom"
-                                                   FontWeight="Light"
-                                                   TextWrapping="Wrap"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </DockPanel>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-
-                <!--Top-->
-
+                <!--
+                
+                Top
+                
+                -->
                 <Grid x:Name="grid_top"
                     Grid.ColumnSpan="2"
                     Background="Black"
@@ -175,7 +288,11 @@
             </Grid>
         </StackPanel>
 
-        <!--BurgerMenu-->
+        <!--
+        
+        BurgerMenu
+        
+        -->
         <Border x:Name="borderBurger"
                 Grid.RowSpan="2"
                 CornerRadius="0 10 10 0"
@@ -195,24 +312,46 @@
                             <Image Source="/img/icons8-close-50.png" />
                         </Button>
                         <TextBlock x:Name="textblock_"
-                                    Text="{Binding Login, TargetNullValue=ЛОГИН}">
+                                    Text="{Binding Login}">
                         </TextBlock>
                         <Button>
-                            <Image Source="{Binding PhotoLink, TargetNullValue=../img/icons8-male-user-32.png}"/>
+                            <Image Source="{Binding PhotoLink}"/>
                         </Button>
                     </StackPanel>
 
 
                     <StackPanel DockPanel.Dock="Top"
                                 Margin="30 20 0 0">
-                        <TextBlock x:Name="textblock_filmlink"
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <Image Source="/img/icons8-home-page-30.png"
+                                   Height="30"
+                                   Margin="5"/>
+                            <TextBlock x:Name="textblock_mainpagelink"
+                                   Text="Главная"
+                                   Margin="5"
+                                   MouseLeftButtonUp="textblock_mainpagelink_MouseLeftButtonUp"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <Image Source="/img/icons8-movie-24.png"
+                                   Height="30"
+                                   Margin="5"/>
+                            <TextBlock x:Name="textblock_filmlink"
                                    Text="Фильмы"
                                    Margin="5"
                                    MouseLeftButtonUp="textblock_filmlink_Click"/>
-                        <TextBlock x:Name="textblock_serieslink"
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <Image Source="/img/icons8-series-30.png"
+                                   Height="30"
+                                   Margin="5"/>
+                            <TextBlock x:Name="textblock_serieslink"
                                    Text="Сериалы"
                                    Margin="5"
                                    MouseLeftButtonUp="textblock_serieslink_Click"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <Separator DockPanel.Dock="Top"
@@ -234,10 +373,14 @@
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Title, Converter={StaticResource UpperLowerConverter}}"
+                                <TextBlock Text="{Binding Title, Converter={StaticResource UpperCaseConverter}}"
                                             Foreground="White"
                                             Margin="0 5"
-                                            MouseLeftButtonUp="TextBlock_MouseLeftButtonUp"/>
+                                            MouseLeftButtonUp="TextBlock_MouseLeftButtonUp">
+                                    <TextBlock.Resources>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                    </TextBlock.Resources>
+                                </TextBlock>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -247,11 +390,3 @@
         </Border>
     </Grid>
 </Window>
-
-<!--Цвета-->
-<!--
-#6E6E6E - задний фон
-#BCFD4C - зеленый яркий
-#0C800C - зеленый
-    #0B0C10
--->

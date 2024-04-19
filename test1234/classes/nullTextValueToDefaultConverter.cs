@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -27,6 +28,20 @@ namespace test1234.classes
                         return null;
                     }
                     return System.Convert.ToString(System.Convert.ToDateTime(value).Year) + " г.";
+
+                case "photoLink":
+                    if (value == null)
+                    {
+                        return null;
+                    }
+                    return "../img/icons8-male-user-32.png";
+
+                case "username":
+                    if (value == null)
+                    {
+                        return null;
+                    }
+                    return "Войти";
 
                 default:
                     return null;

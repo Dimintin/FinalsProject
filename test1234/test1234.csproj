@@ -65,6 +65,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="classes\FilmCollection.cs" />
+    <Compile Include="classes\FontSizeExtension.cs" />
+    <Compile Include="classes\PercentValueConverter.cs" />
     <Compile Include="db\Country.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -240,6 +242,11 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="img\icons8-circled-right-24.png" />
+    <Resource Include="img\icons8-go-back-24.png" />
+    <Resource Include="img\icons8-home-page-30.png" />
+    <Resource Include="img\icons8-movie-24.png" />
+    <Resource Include="img\icons8-series-30.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,6 +17,7 @@ using test1234.classes;
 using test1234.db;
 using System.Globalization;
 using test1234.windows;
+using System.Windows.Media.Animation;
 
 namespace test1234
 {
@@ -31,19 +32,9 @@ namespace test1234
         public MainWindow()
         {
             InitializeComponent();
-            listview_item.ItemsSource = filmList.ToList();
+            listview_newItem.ItemsSource = filmList.Where(i => i.WorldPremiereDate > DateTime.Now.AddYears(-4));
+            listview_favItem.ItemsSource = filmList.Where(i => i.WorldPremiereDate > DateTime.Now.AddYears(-1));
             listview_burgerMenu.ItemsSource = EF.Context.Genre.ToList();
-        }
-
-        internal void SetListValues(List<FilmLibrary> collection)
-        {
-            textblock_emplyListWarning.Visibility = Visibility.Collapsed;
-            filmList = collection;
-            listview_item.ItemsSource = filmList;
-            if (filmList.Count == 0)
-            {
-                textblock_emplyListWarning.Visibility = Visibility.Visible;
-            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -64,7 +55,9 @@ namespace test1234
 
         private void btn_header_search_сlick(object sender, RoutedEventArgs e)
         {
-            SetListValues(filmList.FindAll(i => i.Title.ToLower().Contains(textbox_searchBar.Text)));
+            TotalResultWindow totalResultWindow = new TotalResultWindow(textbox_searchBar.Text);
+            totalResultWindow.Show();
+            this.Close();
         }
 
         private void button_closeBurgerMenu_Click(object sender, RoutedEventArgs e)
@@ -77,17 +70,29 @@ namespace test1234
 
         private void textblock_filmlink_Click(object sender, RoutedEventArgs e)
         {
-            SetListValues(EF.Context.FilmLibrary.Where(i => i.IsSeries == false).ToList());
+            TotalResultWindow totalResultWindow = new TotalResultWindow(1);
+            totalResultWindow.Show();
+            this.Close();
         }
 
         private void textblock_serieslink_Click(object sender, RoutedEventArgs e)
         {
-            SetListValues(EF.Context.FilmLibrary.Where(i => i.IsSeries == true).ToList());
+            TotalResultWindow totalResultWindow = new TotalResultWindow(2);
+            totalResultWindow.Show();
+            this.Close();
         }
 
         private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            
+            var button = sender as TextBlock;
+            if (button == null)
+            {
+                return;
+            }
+            var objectGenre = button.DataContext as Genre;
+            TotalResultWindow totalResultWindow = new TotalResultWindow(objectGenre);
+            totalResultWindow.Show();
+            this.Close();
         }
 
         private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -106,7 +111,6 @@ namespace test1234
         {
             textbox_searchBar.Text = "";
             button_searchDiscardValue.Visibility = Visibility.Collapsed;
-            SetListValues(EF.Context.FilmLibrary.ToList());
         }
 
         private void textbox_searchBar_TextChanged(object sender, TextChangedEventArgs e)
@@ -116,5 +120,48 @@ namespace test1234
                 button_searchDiscardValue.Visibility = Visibility.Visible;
             }
         }
+
+        private void Right_Click(object sender, RoutedEventArgs e)
+        {
+            ScrollViewer scrollViewer = GetChildOfType<ScrollViewer>(listview_newItem);
+            scrollViewer.LineRight();
+        }
+
+        private void Left_Click(object sender, RoutedEventArgs e)
+        {
+            ScrollViewer scrollViewer = GetChildOfType<ScrollViewer>(listview_newItem);
+            scrollViewer.LineLeft();
+        }
+
+        private T GetChildOfType<T>(Visual listview_item) where T : Visual
+        {
+            T child = default;
+            int numVisuals = VisualTreeHelper.GetChildrenCount(listview_item);
+            for (int i = 0; i < numVisuals; i++)
+            {
+                Visual v = (Visual)VisualTreeHelper.GetChild(listview_item, i);
+                child = v as T;
+                if (child == null)
+                {
+                    child = GetChildOfType<T>(v);
+                }
+                if (child != null)
+                {
+                    break;
+                }
+            }
+            return child;
+        }
+
+        private void textblock_mainpagelink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.Show();
+        }
+
+
+
+        // ЭЛЕМЕНТЫ ДЛЯ КАРУСЕЛИ LISTVIEW
+
+
     }
 }
