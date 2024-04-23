@@ -33,8 +33,9 @@ namespace test1234
         {
             InitializeComponent();
             listview_newItem.ItemsSource = filmList.Where(i => i.WorldPremiereDate > DateTime.Now.AddYears(-4));
-            listview_favItem.ItemsSource = filmList.Where(i => i.WorldPremiereDate > DateTime.Now.AddYears(-1));
+            listview_favItem.ItemsSource = filmList.Where(i => i.WorldPremiereDate > DateTime.Now.AddYears(-4));
             listview_burgerMenu.ItemsSource = EF.Context.Genre.ToList();
+            textblock_login.Text = ActiveUser.activeUser.UserName;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -55,9 +56,12 @@ namespace test1234
 
         private void btn_header_search_сlick(object sender, RoutedEventArgs e)
         {
-            TotalResultWindow totalResultWindow = new TotalResultWindow(textbox_searchBar.Text);
-            totalResultWindow.Show();
-            this.Close();
+            if (!string.IsNullOrEmpty(textbox_searchBar.Text))
+            {
+                TotalResultWindow totalResultWindow = new TotalResultWindow(textbox_searchBar.Text);
+                totalResultWindow.Show();
+                this.Close();
+            }
         }
 
         private void button_closeBurgerMenu_Click(object sender, RoutedEventArgs e)

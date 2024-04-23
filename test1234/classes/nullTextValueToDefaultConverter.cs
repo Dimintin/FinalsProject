@@ -29,6 +29,13 @@ namespace test1234.classes
                     }
                     return System.Convert.ToString(System.Convert.ToDateTime(value).Year) + " г.";
 
+                case "dateShort":
+                    if (value == null)
+                    {
+                        return null;
+                    }
+                    return System.Convert.ToDateTime(value).ToShortDateString();
+
                 case "photoLink":
                     if (value == null)
                     {

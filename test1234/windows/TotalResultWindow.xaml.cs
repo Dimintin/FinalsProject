@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -22,40 +23,50 @@ namespace test1234.windows
     /// </summary>
     public partial class TotalResultWindow : Window
     {
+        ObservableCollection<FilmLibrary> _pageFilms = new ObservableCollection<FilmLibrary>();
+        ObservableCollection<FilmLibrary> _tempTable = new ObservableCollection<FilmLibrary>(EF.Context.FilmLibrary);
+        public static int currentPageIndex = 1;
+        public static int itemPerPage = 24;
+        public static int totalPage;
+
         public TotalResultWindow()
         {
             InitializeComponent();
-            listview_burgerMenu.ItemsSource = EF.Context.FilmGenre.ToList();
         }
         public TotalResultWindow(Genre burgerGenre)
         {
             List<FilmLibrary> genreLibrary = new List<FilmLibrary>();
 
             InitializeComponent();
-            listview_burgerMenu.ItemsSource = EF.Context.FilmGenre.ToList();
+
             foreach (var item in EF.Context.FilmGenre.Where(i => i.GenreId == burgerGenre.Id))
             {
                 genreLibrary.AddRange(EF.Context.FilmLibrary.Where(i => i.Id == item.Id));
             }
             listview_newItem.ItemsSource = genreLibrary;
+
+            listview_burgerMenu.ItemsSource = EF.Context.Genre.ToList();
         }
         public TotalResultWindow(string searchPrompt)
         {
             InitializeComponent();
-            listview_burgerMenu.ItemsSource = EF.Context.FilmGenre.ToList();
-            if (true)
+
+            if (EF.Context.FilmLibrary.ToList().FindAll(i => i.Title.ToLower().Contains(searchPrompt.ToLower())).Count() == 0)
             {
-                listview_newItem.ItemsSource = EF.Context.FilmLibrary.ToList().FindAll(i => i.Title.ToLower().Contains(searchPrompt.ToLower()));
+                textblock_noValues.Visibility = Visibility.Visible;
             }
+            listview_newItem.ItemsSource = EF.Context.FilmLibrary.ToList().FindAll(i => i.Title.ToLower().Contains(searchPrompt.ToLower()));
+
+            listview_burgerMenu.ItemsSource = EF.Context.Genre.ToList();
         }
         public TotalResultWindow(int burgerVariant)
         {
             InitializeComponent();
-            listview_burgerMenu.ItemsSource = EF.Context.FilmGenre.ToList();
+
             switch (burgerVariant)
             {
                 case 1:
-                    listview_newItem.ItemsSource = EF.Context.FilmLibrary.Where(i => i.IsSeries == false).ToList();
+                    listview_newItem.ItemsSource = EF.Context.FilmLibrary.Where(i => i.IsSeries == false && i.Id < 30).ToList();
                     break;
                 case 2:
                     listview_newItem.ItemsSource = EF.Context.FilmLibrary.Where(i => i.IsSeries == true).ToList();
@@ -65,10 +76,13 @@ namespace test1234.windows
                 default:
                     break;
             }
+
+            listview_burgerMenu.ItemsSource = EF.Context.Genre.ToList();
         }
 
         internal void SetListValues(List<FilmLibrary> collection)
         {
+            textblock_noValues.Visibility = Visibility.Collapsed;
             listview_newItem.ItemsSource = collection;
         }
 
@@ -90,7 +104,10 @@ namespace test1234.windows
 
         private void btn_header_search_сlick(object sender, RoutedEventArgs e)
         {
-            SetListValues(EF.Context.FilmLibrary.ToList().FindAll(i => i.Title.ToLower().Contains(textbox_searchBar.Text)));
+            if (!string.IsNullOrEmpty(textbox_searchBar.Text))
+            {
+                SetListValues(EF.Context.FilmLibrary.ToList().FindAll(i => i.Title.ToLower().Contains(textbox_searchBar.Text)));
+            }
         }
 
         private void button_closeBurgerMenu_Click(object sender, RoutedEventArgs e)
@@ -123,7 +140,7 @@ namespace test1234.windows
 
             List<FilmLibrary> genreLibrary = new List<FilmLibrary>();
 
-            listview_burgerMenu.ItemsSource = EF.Context.FilmGenre.ToList();
+            listview_burgerMenu.ItemsSource = EF.Context.Genre.ToList();
             foreach (var item in EF.Context.FilmGenre.Where(i => i.GenreId == objectGenre.Id))
             {
                 genreLibrary.AddRange(EF.Context.FilmLibrary.Where(i => i.Id == item.Id));
@@ -164,6 +181,67 @@ namespace test1234.windows
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
+        }
+
+
+
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //int totalPage = EF.Context.FilmLibrary.Count() / itemPerPage;
+            //if (EF.Context.FilmLibrary.Count() % itemPerPage != 0)
+            //{
+            //    totalPage += 1;
+            //}
+            //view_Filter();
+        }
+
+        void view_Filter()
+        {
+            textblock_TotalPage.Text = currentPageIndex.ToString();
+            for (int i = 0; i < currentPageIndex * itemPerPage && i > currentPageIndex * itemPerPage; i++)
+            {
+                _pageFilms.Add(_tempTable[i]);
+            }
+            listview_newItem.ItemsSource = _pageFilms;
+        }
+
+        private void btnFirst_Click(object sender, RoutedEventArgs e)
+        {
+            // Display the first page
+            //if (currentPageIndex != 1)
+            //{
+            //    currentPageIndex = 1;
+            //}
+            //view_Filter();
+        }
+
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
+            // Display previous page
+            //if (currentPageIndex > 1)
+            //{
+            //    currentPageIndex--;
+            //}
+            //view_Filter();
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            // Display next page
+            //currentPageIndex++;
+            //view_Filter();
+        }
+
+        private void btnLast_Click(object sender, RoutedEventArgs e)
+        {
+            // Display the last page
+            //if (currentPageIndex != totalPage)
+            //{
+            //    currentPageIndex = totalPage;
+            //}
+            //view_Filter();
         }
     }
 }

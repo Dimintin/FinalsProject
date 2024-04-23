@@ -8,7 +8,8 @@ using test1234.db;
 
 namespace test1234.classes
 {
-    internal class FilmCollection
+    public class FilmCollection
     {
+        public static ObservableCollection<FilmLibrary> filmLibraries = new ObservableCollection<FilmLibrary>(EF.Context.FilmLibrary);
     }
 }

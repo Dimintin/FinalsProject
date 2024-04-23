@@ -36,24 +36,38 @@ namespace test1234.windows
             textblock_filmTitle.Text = filmObject.Title;
             textblock_filmEnglishTitle.Text = filmObject.EnTitle;
             textblock_filmDescription.Text = filmObject.ShortDecription;
-            textblock_ageRestriction.Text = filmObject.AgeRestriction.ToString() + '+';
-            if (filmObject.RussiaPremiereDate != null)
-            {
-                textblock_russiaPremiere.Text = filmObject.RussiaPremiereDate.Value.ToLongDateString();
-            }
-            if (filmObject.WorldPremiereDate != null)
-            {
-                textblock_worldPremiere.Text = filmObject.WorldPremiereDate.Value.ToLongDateString();
-            }
+            textblock_ageRestriction.Text = filmObject.AgeRestriction.HasValue ? filmObject.AgeRestriction.ToString() + '+' : "-";
+            textblock_russiaPremiere.Text = filmObject.RussiaPremiereDate.HasValue ? filmObject.RussiaPremiereDate.Value.ToLongDateString() : "-";
+            textblock_worldPremiere.Text = filmObject.WorldPremiereDate.HasValue ? filmObject.WorldPremiereDate.Value.ToLongDateString() : "-";
             foreach (var item in EF.Context.FilmGenre.Where(i => i.FilmId == filmObject.Id))
             {
                 textblock_genrese.Text += (EF.Context.Genre.Where(g => g.Id == item.GenreId).FirstOrDefault()).Title + ", ";
             }
+            textblock_genrese.Text = textblock_genrese.Text.TrimEnd(',', ' ');
             foreach (var item in EF.Context.FilmCountry.Where(i => i.FilmId == filmObject.Id))
             {
                 textblock_country.Text += (EF.Context.Country.Where(g => g.Id == item.CountryId).FirstOrDefault()).Title + ", ";
             }
+            textblock_country.Text = textblock_country.Text.TrimEnd(',', ' ');
             textblock_FullDescription.Text = filmObject.FullDescription;
+
+            if (filmObject.IsSeries == true)
+            {
+                stackPanel_filmSeries.Visibility = Visibility.Visible;
+
+            }
+
+            listview_burgerMenu.ItemsSource = EF.Context.Genre.ToList();
+
+            listview_trailer.ItemsSource = EF.Context.PromoTrailer.Where(i => i.FilmId == filmObject.Id).ToList();
+
+
+            List<TextReview> textReviews = new List<TextReview>();
+            foreach (var item in EF.Context.UserView.Where(i => i.FilmId == filmObject.Id /*|| i.EpisodeId == (EF.Context.SeriesEpisode.Where(k => k.EpisodeId == (EF.Context.SeriesSeason.Where(j => j.FilmId == filmObject.Id) as SeriesSeason).Id) as SeriesEpisode).Id*/))
+            {
+                textReviews.Add(EF.Context.TextReview.Where(k => k.UserViewId == item.Id).FirstOrDefault() as TextReview);
+            }
+            listview_textReview.ItemsSource = textReviews;
         }
 
 
@@ -92,12 +106,16 @@ namespace test1234.windows
 
         private void textblock_filmlink_Click(object sender, RoutedEventArgs e)
         {
-            SetListValues(EF.Context.FilmLibrary.Where(i => i.IsSeries == false).ToList());
+            TotalResultWindow totalResultWindow = new TotalResultWindow(2);
+            totalResultWindow.Show();
+            this.Close();
         }
 
         private void textblock_serieslink_Click(object sender, RoutedEventArgs e)
         {
-            SetListValues(EF.Context.FilmLibrary.Where(i => i.IsSeries == true).ToList());
+            TotalResultWindow totalResultWindow = new TotalResultWindow(1);
+            totalResultWindow.Show();
+            this.Close();
         }
 
         private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -135,6 +153,13 @@ namespace test1234.windows
         private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+        }
+
+        private void textblock_mainpagelink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
         }
     }
 }

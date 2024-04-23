@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\KAZAK\Desktop\test1234\test1234\App.xaml
-31193852599
+7-723671842
 22072865281
-37-1984931794
+40685849369
 181219551649
-windows\FilmWindow.xaml;windows\MainWindow.xaml;windows\TotalResultWindow.xaml;
+resources\ButtonTheme.xaml;resources\FilmTileDictionary.xaml;windows\AuthWindow.xaml;windows\FilmWindow.xaml;windows\MainWindow.xaml;windows\RegistWindow.xaml;windows\TotalResultWindow.xaml;
 
 False
 

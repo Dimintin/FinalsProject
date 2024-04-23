@@ -26,3 +26,9 @@ C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234.csproj.Up2Date
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234.exe
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\test1234.pdb
 C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\resources\FilmTileDictionary.baml
+C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\windows\AuthWindow.g.cs
+C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\windows\AuthWindow.baml
+C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\windows\RegistWindow.g.cs
+C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\windows\RegistWindow.baml
+C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\resources\ButtonTheme.baml
