@@ -24,10 +24,9 @@ namespace test1234.windows
     public partial class TotalResultWindow : Window
     {
         ObservableCollection<FilmLibrary> _pageFilms = new ObservableCollection<FilmLibrary>();
-        ObservableCollection<FilmLibrary> _tempTable = new ObservableCollection<FilmLibrary>(EF.Context.FilmLibrary);
-        public static int currentPageIndex = 1;
+        public static int currentPageIndex = 0;
         public static int itemPerPage = 24;
-        public static int totalPage;
+        public static int totalPage = EF.Context.FilmLibrary.Count() / itemPerPage + 1;
 
         public TotalResultWindow()
         {
@@ -66,7 +65,7 @@ namespace test1234.windows
             switch (burgerVariant)
             {
                 case 1:
-                    listview_newItem.ItemsSource = EF.Context.FilmLibrary.Where(i => i.IsSeries == false && i.Id < 30).ToList();
+                    listview_newItem.ItemsSource = EF.Context.FilmLibrary.Where(i => i.IsSeries == false).ToList();
                     break;
                 case 2:
                     listview_newItem.ItemsSource = EF.Context.FilmLibrary.Where(i => i.IsSeries == true).ToList();
@@ -189,59 +188,64 @@ namespace test1234.windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //int totalPage = EF.Context.FilmLibrary.Count() / itemPerPage;
-            //if (EF.Context.FilmLibrary.Count() % itemPerPage != 0)
-            //{
-            //    totalPage += 1;
-            //}
-            //view_Filter();
+            textblock_TotalPage.Text += totalPage.ToString();
+            if (listview_newItem.Items.Count % itemPerPage != 0)
+            {
+                totalPage += 1;
+            }
+            view_Filter();
         }
 
         void view_Filter()
         {
-            textblock_TotalPage.Text = currentPageIndex.ToString();
-            for (int i = 0; i < currentPageIndex * itemPerPage && i > currentPageIndex * itemPerPage; i++)
+            _pageFilms.Clear();
+
+            textblock_Page.Text = (currentPageIndex + 1).ToString();
+            for (int i = currentPageIndex * itemPerPage; i < (currentPageIndex * itemPerPage) + (totalPage == currentPageIndex + 1 ? (listview_newItem.Items.Count % itemPerPage) : itemPerPage); i++)
             {
-                _pageFilms.Add(_tempTable[i]);
+                _pageFilms.Add(EF.Context.FilmLibrary.ToList()[i]);
             }
             listview_newItem.ItemsSource = _pageFilms;
         }
 
         private void btnFirst_Click(object sender, RoutedEventArgs e)
         {
-            // Display the first page
-            //if (currentPageIndex != 1)
-            //{
-            //    currentPageIndex = 1;
-            //}
-            //view_Filter();
+            //Display the first page
+            if (currentPageIndex != 0)
+            {
+                currentPageIndex = 0;
+            }
+            view_Filter();
         }
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)
         {
-            // Display previous page
-            //if (currentPageIndex > 1)
-            //{
-            //    currentPageIndex--;
-            //}
-            //view_Filter();
+            //Display previous page
+            if (currentPageIndex > 0)
+            {
+                currentPageIndex--;
+            }
+            view_Filter();
         }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
             // Display next page
-            //currentPageIndex++;
-            //view_Filter();
+            if (currentPageIndex + 1 < totalPage)
+            {
+                currentPageIndex++;
+            }
+            view_Filter();
         }
 
         private void btnLast_Click(object sender, RoutedEventArgs e)
         {
             // Display the last page
-            //if (currentPageIndex != totalPage)
-            //{
-            //    currentPageIndex = totalPage;
-            //}
-            //view_Filter();
+            if (currentPageIndex + 1 != totalPage)
+            {
+                currentPageIndex = totalPage - 1;
+            }
+            view_Filter();
         }
     }
 }

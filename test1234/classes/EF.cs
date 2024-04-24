@@ -8,6 +8,6 @@ namespace test1234.classes
 {
     internal class EF
     {
-        public static db.OnlineCinema_dataEntities Context = new db.OnlineCinema_dataEntities();
+        public static db.OnlineCinemaEntities Context = new db.OnlineCinemaEntities();
     }
 }

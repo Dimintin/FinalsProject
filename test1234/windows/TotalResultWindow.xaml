@@ -6,10 +6,10 @@
         xmlns:l="clr-namespace:test1234.classes"
         xmlns:local="clr-namespace:test1234.windows"
         mc:Ignorable="d"
-        Title="TotalResultWindow" Height="1024" Width="1440"
+        Title="TotalResultWindow" Height="900" Width="1440"
+        WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
-        WindowStyle="SingleBorderWindow"
         Loaded="Window_Loaded">
     <Window.Resources>
         <l:PercentValueConverter x:Key="percentValueConverter"/>
@@ -50,133 +50,145 @@
         Main List
         
         -->
-
-        <StackPanel Grid.RowSpan="3"
-                    Grid.ColumnSpan="3">
-            <Grid Name="grid_main"  
+        <Grid Name="grid_main"  
                     Grid.RowSpan="2"
                     Grid.ColumnSpan="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <!--
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--
                 
                 FilmList
                 
                 -->
-                <Grid x:Name="grid_list"
+            <Grid x:Name="grid_list"
                       Grid.ColumnSpan="2"
                       Grid.Row="1">
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                                  VerticalScrollBarVisibility="Hidden">
-                        <StackPanel Margin="30 30 30 0">
-                            <Separator Background="White"
-                               Margin="30"/>
-                            <TextBlock x:Name="textblock_noValues"
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              CanContentScroll="True">
+                    <DockPanel Margin="30 30 30 0">
+                        <Separator Background="White"
+                               Margin="30"
+                                       DockPanel.Dock="Top"/>
+                        <TextBlock x:Name="textblock_noValues"
                                    Text="Ничего не найдено..."
                                HorizontalAlignment="Center"
                                FontSize="50"
                                Visibility="Collapsed"
                                    Grid.RowSpan="2"
-                                       Grid.ColumnSpan="10"/>
-
-                            <StackPanel Orientation="Horizontal"
-                                Grid.Row="1"
-                                VerticalAlignment="Bottom"
-                                HorizontalAlignment="Center"
-                                Margin="5"
-                                        Visibility="Collapsed">
-                                <StackPanel.Resources>
-                                    <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
-                                        <Setter Property="Width" Value="40"/>
-                                        <Setter Property="Height" Value="40"/>
-                                        <Setter Property="Margin" Value="5 0"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <Button Click="btnFirst_Click"
-                                        Content="1"/>
-                                <Button Click="btnPrev_Click"
-                                        Content="-"/>
-                                <TextBlock Text="0"
-                                   VerticalAlignment="Center"
-                                   FontSize="25"
-                                   x:Name="textblock_TotalPage"/>
-                                <Button Click="btnNext_Click"
-                                        Content="+"/>
-                                <Button Click="btnLast_Click"
-                                        Content="++"/>
-                            </StackPanel>
-                            <ScrollViewer Height="815"
-                                          VerticalScrollBarVisibility="Hidden">
-                                <ListView Name="listview_newItem"
+                                       Grid.ColumnSpan="10"
+                                       DockPanel.Dock="Top"/>
+                        <ListView Name="listview_newItem"
                                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                       d:ItemsSource="{d:SampleData ItemCount=20}"
                                       Grid.Row="1"
                                       Grid.Column="1"
                                       HorizontalAlignment="Center"
-                                      HorizontalContentAlignment="Center">
-                                    <ListView.Resources>
-                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
-                                    </ListView.Resources>
-                                    <ListView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel/>
-                                        </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Width="195"
+                                      HorizontalContentAlignment="Center"
+                                          DockPanel.Dock="Top">
+                            <ListView.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                            </ListView.Resources>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="195"
                                       MouseLeftButtonUp="Grid_MouseLeftButtonUp">
-                                                <Grid.Resources>
-                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
-                                                </Grid.Resources>
-                                                <DockPanel>
-                                                    <Image Source="{Binding PromoPosterLink}"
+                                        <Grid.Resources>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                        </Grid.Resources>
+                                        <DockPanel>
+                                            <Image Source="{Binding PromoPosterLink}"
                                                DockPanel.Dock="Top"/>
-                                                    <StackPanel DockPanel.Dock="Bottom"
+                                            <StackPanel DockPanel.Dock="Bottom"
                                                        Orientation="Vertical">
-                                                        <TextBlock Text="{Binding Title}"
+                                                <TextBlock Text="{Binding Title}"
                                                        TextWrapping="WrapWithOverflow"
                                                        TextTrimming="CharacterEllipsis"
                                                        MaxHeight="60"/>
-                                                        <StackPanel Orientation="Horizontal"
+                                                <StackPanel Orientation="Horizontal"
                                                         Opacity="0.8">
-                                                            <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource nullToTextConverter}, ConverterParameter=ageRest}"
+                                                    <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource nullToTextConverter}, ConverterParameter=ageRest}"
                                                            Margin="5 0 0 0"
                                                            FontWeight="Light"/>
-                                                            <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource nullToTextConverter}, ConverterParameter=releaseYear}"
+                                                    <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource nullToTextConverter}, ConverterParameter=releaseYear}"
                                                        DockPanel.Dock="Bottom"
                                                        FontWeight="Light"
                                                        TextWrapping="Wrap"/>
-                                                        </StackPanel>
-                                                    </StackPanel>
-                                                </DockPanel>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </ScrollViewer>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel Orientation="Horizontal"
+                                 Grid.Row="1"
+                                 VerticalAlignment="Bottom"
+                                 HorizontalAlignment="Center"
+                                 Margin="0 30"
+                                 Visibility="Visible"
+                                DockPanel.Dock="Bottom">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Height" Value="40"/>
+                                    <Setter Property="Margin" Value="5 0"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock Text="◄◄"
+                                    FontSize="30"
+                                    VerticalAlignment="Center"
+                                    MouseLeftButtonUp="btnFirst_Click"
+                                    FontWeight="ExtraBold"/>
+                            <TextBlock Text="◄"
+                                    FontSize="30"
+                                    VerticalAlignment="Center"
+                                    MouseLeftButtonUp="btnPrev_Click"
+                                    Margin="15 0 5 0"/>
+                            <TextBlock VerticalAlignment="Center"
+                                    FontSize="25"
+                                    x:Name="textblock_Page"/>
+                            <TextBlock Text=" / "
+                                    VerticalAlignment="Center"
+                                    FontSize="25"
+                                    x:Name="textblock_TotalPage"/>
+                            <TextBlock FontSize="30"
+                                    VerticalAlignment="Center"
+                                    MouseLeftButtonUp="btnNext_Click"
+                                    Margin="5 0 15 0"
+                                    Text="►"/>
+                            <TextBlock Text="►►"
+                                    FontSize="30"
+                                    VerticalAlignment="Center"
+                                    MouseLeftButtonUp="btnLast_Click"
+                                    Margin="5 0"/>
                         </StackPanel>
-                    </ScrollViewer>
-                </Grid>
-                <!--
+                    </DockPanel>
+                </ScrollViewer>
+            </Grid>
+            <!--
                 
                 Top
                 
                 -->
-                <Grid x:Name="grid_top"
+            <Grid x:Name="grid_top"
                     Grid.ColumnSpan="2"
                     Background="Black"
                     Opacity="0.9"
                     Grid.Row="0">
-                    <DockPanel>
-                        <Button x:Name="btn_burgeropen"
+                <DockPanel>
+                    <Button x:Name="btn_burgeropen"
                     HorizontalAlignment="Left"
                     Margin="30 0"
                     BorderThickness="0"
@@ -185,43 +197,42 @@
                     Width="40"
                     Click="btn_burgeropen_сlick"
                                 DockPanel.Dock="Left">
-                            <Image Source="/img/icons8-menu-50.png"/>
-                        </Button>
-                        <StackPanel Orientation="Horizontal"
+                        <Image Source="/img/icons8-menu-50.png"/>
+                    </Button>
+                    <StackPanel Orientation="Horizontal"
                         Margin="30 20"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center">
-                            <Border BorderThickness="2"
+                        <Border BorderThickness="2"
                                     BorderBrush="White"
                                     CornerRadius="10">
-                                <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="button_searchDiscardValue"
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="button_searchDiscardValue"
                                             Visibility="Collapsed"
                                             Click="button_searchDiscardValue_Click">
-                                        <Image Source="/img/icons8-close-50.png" 
+                                    <Image Source="/img/icons8-close-50.png" 
                                                Height="30"
                                                Margin="5"/>
-                                    </Button>
-                                    <TextBox x:Name="textbox_searchBar"
+                                </Button>
+                                <TextBox x:Name="textbox_searchBar"
                                              Width="600"
                                         MaxLines="1"
                                         MaxLength="50"
                                         BorderThickness="0"
                                              TextChanged="textbox_searchBar_TextChanged"/>
-                                    <Button Name="btn_header_search"
+                                <Button Name="btn_header_search"
                                         Height="40"
                                         Width="40"
                                         Margin="5"
                                         Click="btn_header_search_сlick">
-                                        <Image Source="/img/icons8-search-50.png"/>
-                                    </Button>
-                                </StackPanel>
-                            </Border>
-                        </StackPanel>
-                    </DockPanel>
-                </Grid>
+                                    <Image Source="/img/icons8-search-50.png"/>
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </DockPanel>
             </Grid>
-        </StackPanel>
+        </Grid>
 
         <!--
         

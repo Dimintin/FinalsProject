@@ -573,7 +573,17 @@
                                  VerticalAlignment="Bottom"
                                  Margin="10 10 30 0"
                                  DockPanel.Dock="Right">
-                            <Image/>
+                            <Image>
+                                <Image.Source>
+                                    <Binding Path="">
+                                        <Binding.TargetNullValue>
+                                            <ImageSource>
+                                                ..\img\icons8-male-user-32.png
+                                            </ImageSource>
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </Image.Source>
+                            </Image>
                         </Button>
                         <TextBlock x:Name="textblock_login"
                                    FontSize="20"

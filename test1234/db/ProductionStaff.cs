@@ -21,9 +21,7 @@ namespace test1234.db
         }
     
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Patronymic { get; set; }
+        public string FullName { get; set; }
         public System.DateTime BirthDate { get; set; }
         public Nullable<System.DateTime> DeathDate { get; set; }
         public Nullable<int> BirthCountryId { get; set; }

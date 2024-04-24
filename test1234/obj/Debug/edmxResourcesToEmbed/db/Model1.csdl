@@ -95,23 +95,13 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FullName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="DeathDate" Type="DateTime" Precision="0" />
     <Property Name="BirthCountryId" Type="Int32" />
     <Property Name="GenderId" Type="Int32" />
     <NavigationProperty Name="FilmProductionStaff" Relationship="Self.FK__FilmProdu__Staff__71D1E811" FromRole="ProductionStaff" ToRole="FilmProductionStaff" />
     <NavigationProperty Name="Gender" Relationship="Self.FK__Productio__Gende__6D0D32F4" FromRole="ProductionStaff" ToRole="Gender" />
-  </EntityType>
-  <EntityType Name="PromoPoster">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="FilmId" Type="Int32" />
-    <Property Name="Link" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
   <EntityType Name="PromoTrailer">
     <Key>
@@ -199,6 +189,7 @@
     <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="RegistDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="UserView" Relationship="Self.FK__UserView__UserId__5812160E" FromRole="UserData" ToRole="UserView" />
   </EntityType>
   <EntityType Name="UserView">
@@ -215,27 +206,6 @@
     <NavigationProperty Name="StarReview" Relationship="Self.FK__StarRevie__UserV__76969D2E" FromRole="UserView" ToRole="StarReview" />
     <NavigationProperty Name="TextReview" Relationship="Self.FK__TextRevie__UserV__7C4F7684" FromRole="UserView" ToRole="TextReview" />
     <NavigationProperty Name="UserData" Relationship="Self.FK__UserView__UserId__5812160E" FromRole="UserView" ToRole="UserData" />
-  </EntityType>
-  <EntityType Name="View_FilmGenreList">
-    <Key>
-      <PropertyRef Name="Genre" />
-    </Key>
-    <Property Name="EnTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-  </EntityType>
-  <EntityType Name="View_MainPageListNum1">
-    <Key>
-      <PropertyRef Name="Id" />
-      <PropertyRef Name="Link" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="EnTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="PremiereYear" Type="Int32" />
-    <Property Name="AgeRestriction" Type="Int32" />
-    <Property Name="IsSeries" Type="Boolean" />
-    <Property Name="Link" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
   <Association Name="FK__FilmCount__Count__4589517F">
     <End Role="Country" Type="Self.Country" Multiplicity="1" />
@@ -433,7 +403,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="OnlineCinema_dataEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="OnlineCinemaEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Country" EntityType="Self.Country" />
     <EntitySet Name="Currency" EntityType="Self.Currency" />
     <EntitySet Name="FilmCountry" EntityType="Self.FilmCountry" />
@@ -443,7 +413,6 @@
     <EntitySet Name="Gender" EntityType="Self.Gender" />
     <EntitySet Name="Genre" EntityType="Self.Genre" />
     <EntitySet Name="ProductionStaff" EntityType="Self.ProductionStaff" />
-    <EntitySet Name="PromoPoster" EntityType="Self.PromoPoster" />
     <EntitySet Name="PromoTrailer" EntityType="Self.PromoTrailer" />
     <EntitySet Name="SeriesEpisode" EntityType="Self.SeriesEpisode" />
     <EntitySet Name="SeriesSeason" EntityType="Self.SeriesSeason" />
@@ -453,8 +422,6 @@
     <EntitySet Name="TextReview" EntityType="Self.TextReview" />
     <EntitySet Name="UserData" EntityType="Self.UserData" />
     <EntitySet Name="UserView" EntityType="Self.UserView" />
-    <EntitySet Name="View_FilmGenreList" EntityType="Self.View_FilmGenreList" />
-    <EntitySet Name="View_MainPageListNum1" EntityType="Self.View_MainPageListNum1" />
     <AssociationSet Name="FK__FilmCount__Count__4589517F" Association="Self.FK__FilmCount__Count__4589517F">
       <End Role="Country" EntitySet="Country" />
       <End Role="FilmCountry" EntitySet="FilmCountry" />
@@ -519,5 +486,46 @@
       <End Role="UserData" EntitySet="UserData" />
       <End Role="UserView" EntitySet="UserView" />
     </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(OnlineCinema_dataModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(OnlineCinema_dataModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
   </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
 </Schema>

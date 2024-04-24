@@ -7,11 +7,12 @@
         mc:Ignorable="d"
         Title="AuthWindow" Height="500" Width="720"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -28,11 +29,11 @@
             </Style>
             <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
                 <Setter Property="Margin" Value="0 10"/>
+                <Setter Property="Height" Value="50"/>
             </Style>
         </Grid.Resources>
 
-        <Border Grid.ColumnSpan="3"
-                    Grid.RowSpan="3">
+        <Border Grid.ColumnSpan="10">
             <Border.Background>
                 <LinearGradientBrush EndPoint="0,0" StartPoint="1,0" Opacity="0.2">
                     <GradientStop Color="Black"/>
@@ -42,16 +43,20 @@
             </Border.Background>
         </Border>
 
-        <Grid Grid.Column="1"
-            Background="Gray">
+        <Grid Grid.Column="1">
+            <Grid.Background>
+                <SolidColorBrush Color="#000000" Opacity="0.5"/>
+            </Grid.Background>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical"
                     VerticalAlignment="Center"
-                    Grid.Column="1">
+                    Grid.Column="1"
+                        Visibility="Collapsed"
+                        x:Name="stackpanel_auth">
                 <TextBlock Text="Авторизация"
                        HorizontalAlignment="Center"
                        FontWeight="Bold"
@@ -62,9 +67,9 @@
                        FontWeight="Bold"
                        FontSize="20"
                        Margin="5"/>
-                <TextBox Height="45"
+                <TextBox
                          TextWrapping="NoWrap"
-                         MaxLength="21"
+                         MaxLength="50"
                          MaxLines="1"
                          FontSize="20"
                          Tag="Пароль"
@@ -74,9 +79,9 @@
                        FontWeight="Bold"
                        FontSize="20"
                        Margin="5"/>
-                <TextBox Height="45"
+                <TextBox 
                          TextWrapping="NoWrap"
-                         MaxLength="21"
+                         MaxLength="50"
                          MaxLines="1"
                          FontSize="20"
                          Tag="Пароль"
@@ -86,7 +91,11 @@
                         FontSize="20"
                         VerticalContentAlignment="Center"
                         Margin="10"
-                        Click="Button_Click">
+                        Click="Button_Click"
+                        BorderThickness="2"
+                        BorderBrush="White"
+                        Width="150"
+                        Template="{StaticResource NoMouseOverButtonTemplate}">
                     <Button.Resources>
                         <Style TargetType="{x:Type ButtonBase}">
                             <Style.Triggers>
@@ -99,28 +108,15 @@
                     </Button.Resources>
                 </Button>
                 <StackPanel Orientation="Horizontal"
-                            Margin="0 10">
-                    <TextBlock Text="Напомнить пароль?"
-                       HorizontalAlignment="Center"
-                       Margin="20 0 0 0"
-                               VerticalAlignment="Center">
-                        <TextBlock.Resources>
-                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseDirectlyOver" Value="True">
-                                        <Setter Property="Foreground" Value="DarkGray"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Resources>
-                    </TextBlock>
+                            Margin="0 10"
+                            HorizontalAlignment="Center">
                     <TextBlock x:Name="textblock_regist"
                        Text="Регистрация"
                        HorizontalAlignment="Center"
-                       Margin="20 0 0 0"
                        FontStyle="Italic"
                        MouseLeftButtonUp="textblock_regist_MouseLeftButtonUp"
-                               VerticalAlignment="Center">
+                               VerticalAlignment="Center"
+                               TextDecorations="Underline">
                         <TextBlock.Resources>
                             <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
                                 <Style.Triggers>
@@ -133,7 +129,75 @@
                     </TextBlock>
                 </StackPanel>
             </StackPanel>
+            <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Center"
+                    Grid.Column="1"
+                        Visibility="Visible"
+                        x:Name="stackpanel_regist">
+                <TextBlock Text="Регистрация"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold"
+                       FontSize="35"
+                       Margin="0 8 0 0"/>
+                <TextBlock Text="Логин*"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold"
+                       FontSize="20"
+                       Margin="5"/>
+                <TextBox 
+                         TextWrapping="NoWrap"
+                         MaxLength="50"
+                         MaxLines="1"
+                         FontSize="20"
+                         Tag="Пароль"
+                         x:Name="textbox_newlogin" BorderBrush="White"/>
+                <TextBlock Text="Пароль*"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold"
+                       FontSize="20"
+                       Margin="5"/>
+                <TextBox
+                         TextWrapping="NoWrap"
+                         MaxLength="50"
+                         MaxLines="1"
+                         FontSize="20"
+                         Tag="Пароль"
+                         x:Name="textbox_newpass"/>
+                <TextBlock Text="Почта"
+                       HorizontalAlignment="Left"
+                       FontWeight="Bold"
+                       FontSize="20"
+                       Margin="5"/>
+                <TextBox
+                         TextWrapping="NoWrap"
+                         MaxLength="50"
+                         MaxLines="1"
+                         FontSize="20"
+                         Tag="Пароль"
+                         x:Name="textbox_newemail"/>
+                <Button Content="Вход"
+                        Height="40"
+                        FontSize="20"
+                        VerticalContentAlignment="Center"
+                        Margin="10"
+                        Click="button_regist_Click"
+                        BorderThickness="2"
+                        BorderBrush="White"
+                        Width="150"
+                        Name="button_regist"
+                        Template="{StaticResource NoMouseOverButtonTemplate}">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type ButtonBase}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" Value="Gray"/>
+                                    <Setter Property="BorderThickness" Value="2"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
         </Grid>
-
     </Grid>
 </Window>
