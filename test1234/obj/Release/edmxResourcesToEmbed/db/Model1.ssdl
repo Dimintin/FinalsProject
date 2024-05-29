@@ -47,15 +47,16 @@
     <Property Name="DurationInMinutes" Type="int" />
     <Property Name="IsSeries" Type="bit" />
     <Property Name="FilmLink" Type="nvarchar" MaxLength="350" />
+    <Property Name="PromoPosterLink" Type="nvarchar" MaxLength="350" />
   </EntityType>
   <EntityType Name="FilmProductionStaff">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="StaffId" Type="int" />
-    <Property Name="FilmId" Type="int" />
-    <Property Name="StaffRoleId" Type="int" />
+    <Property Name="StaffId" Type="int" Nullable="false" />
+    <Property Name="FilmId" Type="int" Nullable="false" />
+    <Property Name="StaffRoleId" Type="int" Nullable="false" />
     <Property Name="ActorRole" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Gender">
@@ -77,21 +78,12 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="60" Nullable="false" />
     <Property Name="BirthDate" Type="date" Nullable="false" />
     <Property Name="DeathDate" Type="date" />
-    <Property Name="BirthCountryId" Type="int" />
-    <Property Name="GenderId" Type="int" />
-  </EntityType>
-  <EntityType Name="PromoPoster">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="FilmId" Type="int" />
-    <Property Name="Link" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="BirthCountryId" Type="int" Nullable="false" />
+    <Property Name="GenderId" Type="int" Nullable="false" />
+    <Property Name="PhotoLink" Type="nvarchar" MaxLength="360" />
   </EntityType>
   <EntityType Name="PromoTrailer">
     <Key>
@@ -107,7 +99,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="EpisodeId" Type="int" />
+    <Property Name="SeasonId" Type="int" />
     <Property Name="EpisodeNumber" Type="int" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="150" />
     <Property Name="EnTitle" Type="nvarchar" MaxLength="150" />
@@ -134,15 +126,6 @@
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
-  </EntityType>
-  <EntityType Name="StarReview">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="UserViewId" Type="int" />
-    <Property Name="StarAmount" Type="decimal" Precision="3" Scale="1" Nullable="false" />
-    <Property Name="ReviewTime" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -172,6 +155,16 @@
     <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="RegistDate" Type="datetime" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="70" />
+    <Property Name="ProfilePhotoLink" Type="nvarchar" MaxLength="360" />
+  </EntityType>
+  <EntityType Name="UserFavorite">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="FilmId" Type="int" />
   </EntityType>
   <EntityType Name="UserView">
     <Key>
@@ -180,31 +173,57 @@
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" />
     <Property Name="FilmId" Type="int" />
-    <Property Name="EpisodeId" Type="int" />
-    <Property Name="ViewDate" Type="datetime" />
+    <Property Name="ViewTime" Type="datetime" Nullable="false" />
   </EntityType>
   <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "OnlineCinema_data.dbo.View_FilmGenreList" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
-  <EntityType Name="View_FilmGenreList">
+предупреждение 6002: В таблице или представлении "OnlineCinema_data.dbo.View_FilmProduction" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="View_FilmProduction">
     <Key>
-      <PropertyRef Name="Genre" />
+      <PropertyRef Name="FullName" />
+      <PropertyRef Name="FilmId" />
+      <PropertyRef Name="Title" />
     </Key>
-    <Property Name="EnTitle" Type="nvarchar" MaxLength="150" />
-    <Property Name="Title" Type="nvarchar" MaxLength="150" />
-    <Property Name="Genre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="PhotoLink" Type="nvarchar" MaxLength="360" />
+    <Property Name="ActorRole" Type="nvarchar" MaxLength="100" />
+    <Property Name="FilmId" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "OnlineCinema_data.dbo.View_MainPageListNum1" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
-  <EntityType Name="View_MainPageListNum1">
+предупреждение 6002: В таблице или представлении "OnlineCinema_data.dbo.View_UserItemViems" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="View_UserItemViems">
     <Key>
-      <PropertyRef Name="Link" />
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="UserId" />
     </Key>
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="150" />
-    <Property Name="EnTitle" Type="nvarchar" MaxLength="150" />
-    <Property Name="PremiereYear" Type="int" />
-    <Property Name="AgeRestriction" Type="int" />
-    <Property Name="IsSeries" Type="bit" />
-    <Property Name="Link" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="PromoPosterLink" Type="nvarchar" MaxLength="350" />
+    <Property Name="ViewTime" Type="datetime" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "OnlineCinema_data.dbo.View_UserReviews" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="View_UserReviews">
+    <Key>
+      <PropertyRef Name="UserName" />
+      <PropertyRef Name="FilmId" />
+      <PropertyRef Name="ReviewTitle" />
+      <PropertyRef Name="ReviewText" />
+      <PropertyRef Name="ReviewTime" />
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="ReviewId" />
+    </Key>
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FilmId" Type="int" Nullable="false" />
+    <Property Name="FilmTitle" Type="nvarchar" MaxLength="150" />
+    <Property Name="PromoPosterLink" Type="nvarchar" MaxLength="350" />
+    <Property Name="ReviewTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ReviewText" Type="nvarchar" MaxLength="550" Nullable="false" />
+    <Property Name="ReviewTime" Type="datetime" Nullable="false" />
+    <Property Name="ProfilePhotoLink" Type="nvarchar" MaxLength="360" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ReviewId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK__FilmCount__Count__4589517F">
     <End Role="Country" Type="Self.Country" Multiplicity="1" />
@@ -215,42 +234,6 @@
       </Principal>
       <Dependent Role="FilmCountry">
         <PropertyRef Name="CountryId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__FilmCount__FilmI__44952D46">
-    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="1" />
-    <End Role="FilmCountry" Type="Self.FilmCountry" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FilmLibrary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="FilmCountry">
-        <PropertyRef Name="FilmId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__FilmGenre__FilmI__4865BE2A">
-    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="1" />
-    <End Role="FilmGenre" Type="Self.FilmGenre" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FilmLibrary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="FilmGenre">
-        <PropertyRef Name="FilmId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__FilmGenre__Genre__4959E263">
-    <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
-    <End Role="FilmGenre" Type="Self.FilmGenre" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Genre">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="FilmGenre">
-        <PropertyRef Name="GenreId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -266,32 +249,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__FilmProdu__FilmI__72C60C4A">
-    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="0..1" />
-    <End Role="FilmProductionStaff" Type="Self.FilmProductionStaff" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FilmLibrary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="FilmProductionStaff">
-        <PropertyRef Name="FilmId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__FilmProdu__Staff__71D1E811">
-    <End Role="ProductionStaff" Type="Self.ProductionStaff" Multiplicity="0..1" />
-    <End Role="FilmProductionStaff" Type="Self.FilmProductionStaff" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProductionStaff">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="FilmProductionStaff">
-        <PropertyRef Name="StaffId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__FilmProdu__Staff__73BA3083">
-    <End Role="StaffRole" Type="Self.StaffRole" Multiplicity="0..1" />
+    <End Role="StaffRole" Type="Self.StaffRole" Multiplicity="1" />
     <End Role="FilmProductionStaff" Type="Self.FilmProductionStaff" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StaffRole">
@@ -303,7 +262,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Productio__Gende__6D0D32F4">
-    <End Role="Gender" Type="Self.Gender" Multiplicity="0..1" />
+    <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
     <End Role="ProductionStaff" Type="Self.ProductionStaff" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Gender">
@@ -311,34 +270,6 @@
       </Principal>
       <Dependent Role="ProductionStaff">
         <PropertyRef Name="GenderId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__PromoPost__FilmI__45F365D3">
-    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="PromoPoster" Type="Self.PromoPoster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FilmLibrary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PromoPoster">
-        <PropertyRef Name="FilmId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__PromoTrai__FilmI__48CFD27E">
-    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="PromoTrailer" Type="Self.PromoTrailer" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FilmLibrary">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PromoTrailer">
-        <PropertyRef Name="FilmId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -352,23 +283,11 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="SeriesEpisode">
-        <PropertyRef Name="EpisodeId" />
+        <PropertyRef Name="SeasonId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__StarRevie__UserV__76969D2E">
-    <End Role="UserView" Type="Self.UserView" Multiplicity="0..1" />
-    <End Role="StarReview" Type="Self.StarReview" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UserView">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StarReview">
-        <PropertyRef Name="UserViewId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__TextRevie__UserV__7C4F7684">
+  <Association Name="FK__TextRevie__UserV__1E05700A">
     <End Role="UserView" Type="Self.UserView" Multiplicity="0..1" />
     <End Role="TextReview" Type="Self.TextReview" Multiplicity="*" />
     <ReferentialConstraint>
@@ -380,19 +299,33 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserView__Episod__59FA5E80">
-    <End Role="SeriesEpisode" Type="Self.SeriesEpisode" Multiplicity="0..1" />
-    <End Role="UserView" Type="Self.UserView" Multiplicity="*" />
+  <Association Name="FK__UserFavor__FilmI__11D4A34F">
+    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="0..1" />
+    <End Role="UserFavorite" Type="Self.UserFavorite" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="SeriesEpisode">
+      <Principal Role="FilmLibrary">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="UserView">
-        <PropertyRef Name="EpisodeId" />
+      <Dependent Role="UserFavorite">
+        <PropertyRef Name="FilmId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserView__FilmId__59063A47">
+  <Association Name="FK__UserFavor__UserI__10E07F16">
+    <End Role="UserData" Type="Self.UserData" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserFavorite" Type="Self.UserFavorite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserData">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserFavorite">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserView__FilmId__1940BAED">
     <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="0..1" />
     <End Role="UserView" Type="Self.UserView" Multiplicity="*" />
     <ReferentialConstraint>
@@ -404,10 +337,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserView__UserId__5812160E">
-    <End Role="UserData" Type="Self.UserData" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+  <Association Name="FK__UserView__UserId__184C96B4">
+    <End Role="UserData" Type="Self.UserData" Multiplicity="0..1" />
     <End Role="UserView" Type="Self.UserView" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserData">
@@ -415,6 +346,94 @@
       </Principal>
       <Dependent Role="UserView">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FilmCountry_FilmLibrary">
+    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="1" />
+    <End Role="FilmCountry" Type="Self.FilmCountry" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FilmLibrary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FilmCountry">
+        <PropertyRef Name="FilmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FilmGenre_FilmLibrary">
+    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FilmGenre" Type="Self.FilmGenre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FilmLibrary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FilmGenre">
+        <PropertyRef Name="FilmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FilmGenre_Genre">
+    <End Role="Genre" Type="Self.Genre" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FilmGenre" Type="Self.FilmGenre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FilmGenre">
+        <PropertyRef Name="GenreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FilmProductionStaff_FilmLibrary">
+    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="1" />
+    <End Role="FilmProductionStaff" Type="Self.FilmProductionStaff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FilmLibrary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FilmProductionStaff">
+        <PropertyRef Name="FilmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FilmProductionStaff_ProductionStaff">
+    <End Role="ProductionStaff" Type="Self.ProductionStaff" Multiplicity="1" />
+    <End Role="FilmProductionStaff" Type="Self.FilmProductionStaff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionStaff">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FilmProductionStaff">
+        <PropertyRef Name="StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionStaff_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="ProductionStaff" Type="Self.ProductionStaff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductionStaff">
+        <PropertyRef Name="BirthCountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PromoTrailer_FilmLibrary">
+    <End Role="FilmLibrary" Type="Self.FilmLibrary" Multiplicity="0..1" />
+    <End Role="PromoTrailer" Type="Self.PromoTrailer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FilmLibrary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PromoTrailer">
+        <PropertyRef Name="FilmId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -430,6 +449,108 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="Func_GetGenreFilms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SetGenre" Type="nvarchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="FilmId" Type="int" Nullable="false" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="Func_GetUserReviews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SetUserID" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="ReviewTime" Type="datetime" Nullable="false" />
+          <Property Name="ReviewTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ReviewText" Type="nvarchar" MaxLength="550" Nullable="false" />
+          <Property Name="PromoPosterLink" Type="nvarchar" MaxLength="350" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="Func_GetUserViewHitory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SetUserID" Type="int" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="ViewTime" Type="datetime" />
+          <Property Name="PromoPosterLink" Type="nvarchar" MaxLength="350" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="EnTitle" Type="nvarchar" MaxLength="150" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="Function_UserWatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StartDate" Type="datetime" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="FilmId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="EnTitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="AgeRestriction" Type="int" />
+          <Property Name="WorldPremiereDate" Type="date" />
+          <Property Name="PromoPosterLink" Type="nvarchar" MaxLength="350" />
+          <Property Name="LastWatch" Type="datetime" />
+          <Property Name="Total" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="View_UserWatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StartDate" Type="datetime" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="FilmId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="EnTitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="AgeRestriction" Type="int" />
+          <Property Name="WorldPremiereDate" Type="date" />
+          <Property Name="PromoPosterLink" Type="nvarchar" MaxLength="350" />
+          <Property Name="LastWatch" Type="datetime" />
+          <Property Name="Total" Type="int" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <EntityContainer Name="Хранилище OnlineCinema_dataModelContainer">
     <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
@@ -440,60 +561,54 @@
     <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductionStaff" EntityType="Self.ProductionStaff" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="PromoPoster" EntityType="Self.PromoPoster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PromoTrailer" EntityType="Self.PromoTrailer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SeriesEpisode" EntityType="Self.SeriesEpisode" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SeriesSeason" EntityType="Self.SeriesSeason" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StaffRole" EntityType="Self.StaffRole" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="StarReview" EntityType="Self.StarReview" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TextReview" EntityType="Self.TextReview" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserData" EntityType="Self.UserData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserFavorite" EntityType="Self.UserFavorite" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserView" EntityType="Self.UserView" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="View_FilmGenreList" EntityType="Self.View_FilmGenreList" store:Type="Views" store:Schema="dbo">
+    <EntitySet Name="View_FilmProduction" EntityType="Self.View_FilmProduction" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
-    [View_FilmGenreList].[EnTitle] AS [EnTitle], 
-    [View_FilmGenreList].[Title] AS [Title], 
-    [View_FilmGenreList].[Genre] AS [Genre]
-    FROM [dbo].[View_FilmGenreList] AS [View_FilmGenreList]</DefiningQuery>
+    [View_FilmProduction].[FullName] AS [FullName], 
+    [View_FilmProduction].[PhotoLink] AS [PhotoLink], 
+    [View_FilmProduction].[ActorRole] AS [ActorRole], 
+    [View_FilmProduction].[FilmId] AS [FilmId], 
+    [View_FilmProduction].[Title] AS [Title]
+    FROM [dbo].[View_FilmProduction] AS [View_FilmProduction]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="View_MainPageListNum1" EntityType="Self.View_MainPageListNum1" store:Type="Views" store:Schema="dbo">
+    <EntitySet Name="View_UserItemViems" EntityType="Self.View_UserItemViems" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
-    [View_MainPageListNum1].[Title] AS [Title], 
-    [View_MainPageListNum1].[EnTitle] AS [EnTitle], 
-    [View_MainPageListNum1].[PremiereYear] AS [PremiereYear], 
-    [View_MainPageListNum1].[AgeRestriction] AS [AgeRestriction], 
-    [View_MainPageListNum1].[IsSeries] AS [IsSeries], 
-    [View_MainPageListNum1].[Link] AS [Link]
-    FROM [dbo].[View_MainPageListNum1] AS [View_MainPageListNum1]</DefiningQuery>
+    [View_UserItemViems].[UserName] AS [UserName], 
+    [View_UserItemViems].[Title] AS [Title], 
+    [View_UserItemViems].[PromoPosterLink] AS [PromoPosterLink], 
+    [View_UserItemViems].[ViewTime] AS [ViewTime], 
+    [View_UserItemViems].[UserId] AS [UserId]
+    FROM [dbo].[View_UserItemViems] AS [View_UserItemViems]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_UserReviews" EntityType="Self.View_UserReviews" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_UserReviews].[UserName] AS [UserName], 
+    [View_UserReviews].[FilmId] AS [FilmId], 
+    [View_UserReviews].[FilmTitle] AS [FilmTitle], 
+    [View_UserReviews].[PromoPosterLink] AS [PromoPosterLink], 
+    [View_UserReviews].[ReviewTitle] AS [ReviewTitle], 
+    [View_UserReviews].[ReviewText] AS [ReviewText], 
+    [View_UserReviews].[ReviewTime] AS [ReviewTime], 
+    [View_UserReviews].[ProfilePhotoLink] AS [ProfilePhotoLink], 
+    [View_UserReviews].[Id] AS [Id], 
+    [View_UserReviews].[ReviewId] AS [ReviewId]
+    FROM [dbo].[View_UserReviews] AS [View_UserReviews]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK__FilmCount__Count__4589517F" Association="Self.FK__FilmCount__Count__4589517F">
       <End Role="Country" EntitySet="Country" />
       <End Role="FilmCountry" EntitySet="FilmCountry" />
     </AssociationSet>
-    <AssociationSet Name="FK__FilmCount__FilmI__44952D46" Association="Self.FK__FilmCount__FilmI__44952D46">
-      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
-      <End Role="FilmCountry" EntitySet="FilmCountry" />
-    </AssociationSet>
-    <AssociationSet Name="FK__FilmGenre__FilmI__4865BE2A" Association="Self.FK__FilmGenre__FilmI__4865BE2A">
-      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
-      <End Role="FilmGenre" EntitySet="FilmGenre" />
-    </AssociationSet>
-    <AssociationSet Name="FK__FilmGenre__Genre__4959E263" Association="Self.FK__FilmGenre__Genre__4959E263">
-      <End Role="Genre" EntitySet="Genre" />
-      <End Role="FilmGenre" EntitySet="FilmGenre" />
-    </AssociationSet>
     <AssociationSet Name="FK__FilmLibra__Curre__4222D4EF" Association="Self.FK__FilmLibra__Curre__4222D4EF">
       <End Role="Currency" EntitySet="Currency" />
       <End Role="FilmLibrary" EntitySet="FilmLibrary" />
-    </AssociationSet>
-    <AssociationSet Name="FK__FilmProdu__FilmI__72C60C4A" Association="Self.FK__FilmProdu__FilmI__72C60C4A">
-      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
-      <End Role="FilmProductionStaff" EntitySet="FilmProductionStaff" />
-    </AssociationSet>
-    <AssociationSet Name="FK__FilmProdu__Staff__71D1E811" Association="Self.FK__FilmProdu__Staff__71D1E811">
-      <End Role="ProductionStaff" EntitySet="ProductionStaff" />
-      <End Role="FilmProductionStaff" EntitySet="FilmProductionStaff" />
     </AssociationSet>
     <AssociationSet Name="FK__FilmProdu__Staff__73BA3083" Association="Self.FK__FilmProdu__Staff__73BA3083">
       <End Role="StaffRole" EntitySet="StaffRole" />
@@ -503,37 +618,57 @@
       <End Role="Gender" EntitySet="Gender" />
       <End Role="ProductionStaff" EntitySet="ProductionStaff" />
     </AssociationSet>
-    <AssociationSet Name="FK__PromoPost__FilmI__45F365D3" Association="Self.FK__PromoPost__FilmI__45F365D3">
-      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
-      <End Role="PromoPoster" EntitySet="PromoPoster" />
-    </AssociationSet>
-    <AssociationSet Name="FK__PromoTrai__FilmI__48CFD27E" Association="Self.FK__PromoTrai__FilmI__48CFD27E">
-      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
-      <End Role="PromoTrailer" EntitySet="PromoTrailer" />
-    </AssociationSet>
     <AssociationSet Name="FK__SeriesEpi__Episo__5165187F" Association="Self.FK__SeriesEpi__Episo__5165187F">
       <End Role="SeriesSeason" EntitySet="SeriesSeason" />
       <End Role="SeriesEpisode" EntitySet="SeriesEpisode" />
     </AssociationSet>
-    <AssociationSet Name="FK__StarRevie__UserV__76969D2E" Association="Self.FK__StarRevie__UserV__76969D2E">
-      <End Role="UserView" EntitySet="UserView" />
-      <End Role="StarReview" EntitySet="StarReview" />
-    </AssociationSet>
-    <AssociationSet Name="FK__TextRevie__UserV__7C4F7684" Association="Self.FK__TextRevie__UserV__7C4F7684">
+    <AssociationSet Name="FK__TextRevie__UserV__1E05700A" Association="Self.FK__TextRevie__UserV__1E05700A">
       <End Role="UserView" EntitySet="UserView" />
       <End Role="TextReview" EntitySet="TextReview" />
     </AssociationSet>
-    <AssociationSet Name="FK__UserView__Episod__59FA5E80" Association="Self.FK__UserView__Episod__59FA5E80">
-      <End Role="SeriesEpisode" EntitySet="SeriesEpisode" />
-      <End Role="UserView" EntitySet="UserView" />
+    <AssociationSet Name="FK__UserFavor__FilmI__11D4A34F" Association="Self.FK__UserFavor__FilmI__11D4A34F">
+      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
+      <End Role="UserFavorite" EntitySet="UserFavorite" />
     </AssociationSet>
-    <AssociationSet Name="FK__UserView__FilmId__59063A47" Association="Self.FK__UserView__FilmId__59063A47">
+    <AssociationSet Name="FK__UserFavor__UserI__10E07F16" Association="Self.FK__UserFavor__UserI__10E07F16">
+      <End Role="UserData" EntitySet="UserData" />
+      <End Role="UserFavorite" EntitySet="UserFavorite" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserView__FilmId__1940BAED" Association="Self.FK__UserView__FilmId__1940BAED">
       <End Role="FilmLibrary" EntitySet="FilmLibrary" />
       <End Role="UserView" EntitySet="UserView" />
     </AssociationSet>
-    <AssociationSet Name="FK__UserView__UserId__5812160E" Association="Self.FK__UserView__UserId__5812160E">
+    <AssociationSet Name="FK__UserView__UserId__184C96B4" Association="Self.FK__UserView__UserId__184C96B4">
       <End Role="UserData" EntitySet="UserData" />
       <End Role="UserView" EntitySet="UserView" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FilmCountry_FilmLibrary" Association="Self.FK_FilmCountry_FilmLibrary">
+      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
+      <End Role="FilmCountry" EntitySet="FilmCountry" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FilmGenre_FilmLibrary" Association="Self.FK_FilmGenre_FilmLibrary">
+      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
+      <End Role="FilmGenre" EntitySet="FilmGenre" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FilmGenre_Genre" Association="Self.FK_FilmGenre_Genre">
+      <End Role="Genre" EntitySet="Genre" />
+      <End Role="FilmGenre" EntitySet="FilmGenre" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FilmProductionStaff_FilmLibrary" Association="Self.FK_FilmProductionStaff_FilmLibrary">
+      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
+      <End Role="FilmProductionStaff" EntitySet="FilmProductionStaff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FilmProductionStaff_ProductionStaff" Association="Self.FK_FilmProductionStaff_ProductionStaff">
+      <End Role="ProductionStaff" EntitySet="ProductionStaff" />
+      <End Role="FilmProductionStaff" EntitySet="FilmProductionStaff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionStaff_Country" Association="Self.FK_ProductionStaff_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="ProductionStaff" EntitySet="ProductionStaff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PromoTrailer_FilmLibrary" Association="Self.FK_PromoTrailer_FilmLibrary">
+      <End Role="FilmLibrary" EntitySet="FilmLibrary" />
+      <End Role="PromoTrailer" EntitySet="PromoTrailer" />
     </AssociationSet>
     <AssociationSet Name="FK_SeriesSeason_FilmLibrary" Association="Self.FK_SeriesSeason_FilmLibrary">
       <End Role="FilmLibrary" EntitySet="FilmLibrary" />

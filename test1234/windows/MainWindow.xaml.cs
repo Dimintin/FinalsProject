@@ -26,16 +26,17 @@ namespace test1234
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        List<FilmLibrary> filmList { set; get; } = new List<FilmLibrary>(EF.Context.FilmLibrary);
-
         public MainWindow()
         {
             InitializeComponent();
-            listview_newItem.ItemsSource = filmList.Where(i => i.WorldPremiereDate > DateTime.Now.AddYears(-4));
-            listview_favItem.ItemsSource = filmList.Where(i => i.WorldPremiereDate > DateTime.Now.AddYears(-4));
+            listview_newItem.ItemsSource = EF.Context.FilmLibrary.OrderByDescending(i => i.WorldPremiereDate).Take(20).ToList();
+            listview_totalItem.ItemsSource = EF.Context.FilmLibrary.ToList().Take(24);
             listview_burgerMenu.ItemsSource = EF.Context.Genre.ToList();
             textblock_login.Text = ActiveUser.activeUser.UserName;
+            if (!string.IsNullOrEmpty(ActiveUser.activeUser.ProfilePhotoLink))
+            {
+                image_profile.ImageSource = new BitmapImage(new Uri(ActiveUser.activeUser.ProfilePhotoLink));
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -137,13 +138,13 @@ namespace test1234
             scrollViewer.LineLeft();
         }
 
-        private T GetChildOfType<T>(Visual listview_item) where T : Visual
+        private T GetChildOfType<T>(Visual listviewItem) where T : Visual
         {
             T child = default;
-            int numVisuals = VisualTreeHelper.GetChildrenCount(listview_item);
+            int numVisuals = VisualTreeHelper.GetChildrenCount(listviewItem);
             for (int i = 0; i < numVisuals; i++)
             {
-                Visual v = (Visual)VisualTreeHelper.GetChild(listview_item, i);
+                Visual v = (Visual)VisualTreeHelper.GetChild(listviewItem, i);
                 child = v as T;
                 if (child == null)
                 {
@@ -159,12 +160,35 @@ namespace test1234
 
         private void textblock_mainpagelink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.Show();
+            this.Activate();
         }
 
+        private void button_user_Click(object sender, RoutedEventArgs e)
+        {
+            UserDataWindow userDataWindow = new UserDataWindow();
+            userDataWindow.ShowDialog();
+            textblock_login.Text = ActiveUser.activeUser.UserName;
+            image_profile.ImageSource = new BitmapImage(new Uri(ActiveUser.activeUser.ProfilePhotoLink));
+        }
 
+        private void textblock_favlink_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            TotalResultWindow totalResultWindow = new TotalResultWindow(3);
+            totalResultWindow.Show();
+            this.Close();
+        }
 
-        // ЭЛЕМЕНТЫ ДЛЯ КАРУСЕЛИ LISTVIEW
+        //private void RightFav_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ScrollViewer scrollViewer = GetChildOfType<ScrollViewer>(listview_yourItem);
+        //    scrollViewer.LineRight();
+        //}
+
+        //private void LeftFav_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ScrollViewer scrollViewer = GetChildOfType<ScrollViewer>(listview_yourItem);
+        //    scrollViewer.LineLeft();
+        //}
 
 
     }

@@ -17,20 +17,15 @@ namespace test1234.db
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserView()
         {
-            this.StarReview = new HashSet<StarReview>();
             this.TextReview = new HashSet<TextReview>();
         }
     
         public int Id { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> FilmId { get; set; }
-        public Nullable<int> EpisodeId { get; set; }
-        public Nullable<System.DateTime> ViewDate { get; set; }
+        public System.DateTime ViewTime { get; set; }
     
         public virtual FilmLibrary FilmLibrary { get; set; }
-        public virtual SeriesEpisode SeriesEpisode { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StarReview> StarReview { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TextReview> TextReview { get; set; }
         public virtual UserData UserData { get; set; }

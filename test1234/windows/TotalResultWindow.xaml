@@ -30,7 +30,7 @@
         
         -->
         <Grid.Background>
-            <ImageBrush ImageSource="..\img\Frame 3 (1).jpg"
+            <ImageBrush ImageSource="..\img\background.jpg"
                         Stretch="UniformToFill"/>
         </Grid.Background>
 
@@ -70,10 +70,17 @@
                       Grid.ColumnSpan="2"
                       Grid.Row="1">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                              CanContentScroll="True">
+                              VerticalScrollBarVisibility="Visible"
+                              CanContentScroll="True"
+                    Grid.Row="1">
                     <DockPanel Margin="30 30 30 0">
+                        <TextBlock Text=""
+                                       FontSize="50"
+                                       Margin="20 0"
+                                   DockPanel.Dock="Top"
+                                   x:Name="textblock_resultTitle"/>
                         <Separator Background="White"
-                               Margin="30"
+                               Margin="30 10 30 30"
                                        DockPanel.Dock="Top"/>
                         <TextBlock x:Name="textblock_noValues"
                                    Text="Ничего не найдено..."
@@ -102,36 +109,52 @@
                             </ListView.ItemsPanel>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Width="195"
-                                      MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+                                    <Grid Width="190"
+                                      MouseLeftButtonUp="Grid_MouseLeftButtonUp"
+                                          Margin="5 10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="260"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
                                         <Grid.Resources>
                                             <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
                                         </Grid.Resources>
-                                        <DockPanel>
-                                            <Image Source="{Binding PromoPosterLink}"
-                                               DockPanel.Dock="Top"/>
-                                            <StackPanel DockPanel.Dock="Bottom"
-                                                       Orientation="Vertical">
-                                                <TextBlock Text="{Binding Title}"
-                                                       TextWrapping="WrapWithOverflow"
+                                        <Image Source="{Binding PromoPosterLink}"
+                                                   SnapsToDevicePixels="True"
+                                                   VerticalAlignment="Top"
+                                                   Stretch="Uniform"
+                                                   Height="250"
+                                                   Width="220"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="5"/>
+                                        <StackPanel DockPanel.Dock="Bottom"
+                                                       Orientation="Vertical"
+                                                    Grid.Row="1">
+                                            <TextBlock Text="{Binding Title}"
                                                        TextTrimming="CharacterEllipsis"
                                                        MaxHeight="60"/>
-                                                <StackPanel Orientation="Horizontal"
+                                            <TextBlock Text="{Binding EnTitle}"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       MaxHeight="60"
+                                                       Foreground="LightGray"/>
+                                            <StackPanel Orientation="Horizontal"
                                                         Opacity="0.8">
-                                                    <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource nullToTextConverter}, ConverterParameter=ageRest}"
+                                                <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource nullToTextConverter}, ConverterParameter=ageRest}"
                                                            Margin="5 0 0 0"
                                                            FontWeight="Light"/>
-                                                    <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource nullToTextConverter}, ConverterParameter=releaseYear}"
+                                                <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource nullToTextConverter}, ConverterParameter=releaseYear}"
                                                        DockPanel.Dock="Bottom"
                                                        FontWeight="Light"
                                                        TextWrapping="Wrap"/>
-                                                </StackPanel>
                                             </StackPanel>
-                                        </DockPanel>
+                                        </StackPanel>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
+
+                        <!--, Converter={StaticResource nullToTextConverter}, ConverterParameter=ageRest-->
+
                         <StackPanel Orientation="Horizontal"
                                  Grid.Row="1"
                                  VerticalAlignment="Bottom"
@@ -160,6 +183,9 @@
                                     FontSize="25"
                                     x:Name="textblock_Page"/>
                             <TextBlock Text=" / "
+                                    VerticalAlignment="Center"
+                                    FontSize="25"/>
+                            <TextBlock Text=""
                                     VerticalAlignment="Center"
                                     FontSize="25"
                                     x:Name="textblock_TotalPage"/>
@@ -247,9 +273,7 @@
                 Panel.ZIndex="0">
             <Grid x:Name="GridBurger">
                 <DockPanel>
-                    <StackPanel HorizontalAlignment="Left"
-                                Orientation="Horizontal"
-                                DockPanel.Dock="Top">
+                    <DockPanel DockPanel.Dock="Top">
                         <Button x:Name="button_closeBurgerMenu"
                                 Height="40"
                                 Width="40"
@@ -257,13 +281,47 @@
                                 Margin="30 30 0 0">
                             <Image Source="/img/icons8-close-50.png" />
                         </Button>
-                        <TextBlock x:Name="textblock_"
-                                    Text="{Binding Login}">
-                        </TextBlock>
-                        <Button>
-                            <Image Source="{Binding PhotoLink}"/>
-                        </Button>
-                    </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Height="40"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Right"
+                                    Margin="0 0 30 0"
+                                    MouseLeftButtonUp="button_user_Click">
+                            <TextBlock x:Name="textblock_login"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Text=""
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                           Margin="10 0"
+                                       MaxWidth="150"
+                                       TextTrimming="CharacterEllipsis"/>
+                            <Border CornerRadius="100"
+                                    BorderBrush="White"
+                                    BorderThickness="2"
+                                    Width="40">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="2"
+                                                      Opacity="0.5"
+                                                      ShadowDepth="3"/>
+                                </Border.Effect>
+                                <Border.Background>
+                                    <ImageBrush x:Name="image_profile"
+                                                Stretch="Fill">
+                                        <ImageBrush.ImageSource>
+                                            <Binding>
+                                                <Binding.TargetNullValue>
+                                                    <ImageSource>
+                                                        ..\img\icons8-male-user-32.png
+                                                    </ImageSource>
+                                                </Binding.TargetNullValue>
+                                            </Binding>
+                                        </ImageBrush.ImageSource>
+                                    </ImageBrush>
+                                </Border.Background>
+                            </Border>
+                        </StackPanel>
+                    </DockPanel>
 
 
                     <StackPanel DockPanel.Dock="Top"
@@ -298,6 +356,16 @@
                                    Margin="5"
                                    MouseLeftButtonUp="textblock_serieslink_Click"/>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                                <Image Source="/img/icons8-heart-filled-48.png"
+                                   Height="30"
+                                   Margin="5"/>
+                                <TextBlock x:Name="textblock_favlink"
+                                   Text="Избранное"
+                                   Margin="5"
+                                   MouseLeftButtonUp="textblock_favlink_MouseLeftButtonUp"/>
+                            </StackPanel>
                     </StackPanel>
 
                     <Separator DockPanel.Dock="Top"

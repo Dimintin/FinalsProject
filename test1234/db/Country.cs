@@ -18,6 +18,7 @@ namespace test1234.db
         public Country()
         {
             this.FilmCountry = new HashSet<FilmCountry>();
+            this.ProductionStaff = new HashSet<ProductionStaff>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace test1234.db
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FilmCountry> FilmCountry { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductionStaff> ProductionStaff { get; set; }
     }
 }

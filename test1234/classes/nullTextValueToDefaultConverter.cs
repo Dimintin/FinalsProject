@@ -34,7 +34,14 @@ namespace test1234.classes
                     {
                         return null;
                     }
-                    return System.Convert.ToDateTime(value).ToShortDateString();
+                    return System.Convert.ToDateTime(value).ToLongTimeString();
+
+                case "dateLong":
+                    if (value == null)
+                    {
+                        return null;
+                    }
+                    return System.Convert.ToDateTime(value).ToLongDateString();
 
                 case "photoLink":
                     if (value == null)

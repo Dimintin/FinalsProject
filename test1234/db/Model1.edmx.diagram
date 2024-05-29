@@ -4,41 +4,46 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="67a520bcc3d44f9f820f070b1c688264" Name="Diagram1">
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.Country" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.Currency" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.FilmCountry" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.FilmGenre" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.FilmLibrary" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.FilmProductionStaff" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.Gender" Width="1.5" PointX="0.75" PointY="15.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.Genre" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.ProductionStaff" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.PromoTrailer" Width="1.5" PointX="5.25" PointY="17.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.SeriesEpisode" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.SeriesSeason" Width="1.5" PointX="3.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.StaffRole" Width="1.5" PointX="3" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.StarReview" Width="1.5" PointX="10.5" PointY="7.375" IsExpanded="true" />
+      <Diagram DiagramId="8785a993de2e42c68b4ab3c5cc97a367" Name="Diagram1">
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.Country" Width="1.5" PointX="3" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.Currency" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.FilmCountry" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.FilmGenre" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.FilmLibrary" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.FilmProductionStaff" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.Gender" Width="1.5" PointX="0.75" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.Genre" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.ProductionStaff" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.PromoTrailer" Width="1.5" PointX="5.25" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.SeriesEpisode" Width="1.5" PointX="7.5" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.SeriesSeason" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.StaffRole" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineCinema_dataModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.TextReview" Width="1.5" PointX="10.5" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.UserData" Width="1.5" PointX="6" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineCinema_dataModel.UserView" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.TextReview" Width="1.5" PointX="10.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.UserData" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.UserFavorite" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.UserView" Width="1.5" PointX="8.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.View_FilmProduction" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.View_UserItemViems" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineCinema_dataModel.View_UserReviews" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK__FilmCount__Count__4589517F" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinema_dataModel.FK_ProductionStaff_Country" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK__FilmLibra__Curre__4222D4EF" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK_FilmCountry_FilmLibrary" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK_FilmGenre_FilmLibrary" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK_FilmGenre_Genre" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinema_dataModel.FK__UserFavor__FilmI__11D4A34F" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinema_dataModel.FK__UserView__FilmId__1940BAED" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK_FilmProductionStaff_FilmLibrary" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK_PromoTrailer_FilmLibrary" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineCinema_dataModel.FK_UserView_FilmLibrary" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineCinema_dataModel.FK__FilmProdu__Staff__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinema_dataModel.FK_SeriesSeason_FilmLibrary" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK__FilmProdu__Staff__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinema_dataModel.FK_FilmProductionStaff_ProductionStaff" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK__Productio__Gende__6D0D32F4" ManuallyRouted="false" />
         <AssociationConnector Association="OnlineCinema_dataModel.FK__SeriesEpi__Episo__5165187F" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineCinema_dataModel.FK__UserView__Episod__59FA5E80" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineCinema_dataModel.FK__StarRevie__UserV__76969D2E" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineCinema_dataModel.FK__TextRevie__UserV__7C4F7684" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineCinema_dataModel.FK__UserView__UserId__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinema_dataModel.FK__TextRevie__UserV__1E05700A" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinema_dataModel.FK__UserFavor__UserI__10E07F16" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineCinema_dataModel.FK__UserView__UserId__184C96B4" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

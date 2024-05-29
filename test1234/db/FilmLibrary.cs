@@ -19,9 +19,11 @@ namespace test1234.db
         {
             this.FilmCountry = new HashSet<FilmCountry>();
             this.FilmGenre = new HashSet<FilmGenre>();
+            this.UserFavorite = new HashSet<UserFavorite>();
+            this.UserView = new HashSet<UserView>();
             this.FilmProductionStaff = new HashSet<FilmProductionStaff>();
             this.PromoTrailer = new HashSet<PromoTrailer>();
-            this.UserView = new HashSet<UserView>();
+            this.SeriesSeason = new HashSet<SeriesSeason>();
         }
     
         public int Id { get; set; }
@@ -45,10 +47,14 @@ namespace test1234.db
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FilmGenre> FilmGenre { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserFavorite> UserFavorite { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserView> UserView { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FilmProductionStaff> FilmProductionStaff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PromoTrailer> PromoTrailer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserView> UserView { get; set; }
+        public virtual ICollection<SeriesSeason> SeriesSeason { get; set; }
     }
 }

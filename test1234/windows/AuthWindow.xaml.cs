@@ -39,9 +39,9 @@ namespace test1234.windows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(textbox_pass.Text) || !string.IsNullOrEmpty(textbox_pass.Text))
+            if (!string.IsNullOrEmpty(textbox_pass.Password) || !string.IsNullOrEmpty(textbox_pass.Password))
             {
-                authEmployee = classes.EF.Context.UserData.ToList().Where(i => i.Password == textbox_pass.Text && i.UserName == textbox_login.Text).FirstOrDefault();
+                authEmployee = classes.EF.Context.UserData.ToList().Where(i => i.Password == textbox_pass.Password && i.UserName == textbox_login.Text).FirstOrDefault();
 
                 if (authEmployee != null)
                 {
@@ -99,6 +99,25 @@ namespace test1234.windows
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            stackpanel_auth.Visibility = Visibility.Visible;
+            stackpanel_regist.Visibility = Visibility.Collapsed;
+        }
+
+        private void checkbox_showPass_Checked(object sender, RoutedEventArgs e)
+        {
+            border_passVisib.Visibility = Visibility.Visible;
+            border_passSecret.Visibility = Visibility.Collapsed;
+            textbox_textpass.Text = textbox_pass.Password;
+        }
+
+        private void checkbox_showPass_Unchecked(object sender, RoutedEventArgs e)
+        {
+            border_passVisib.Visibility = Visibility.Collapsed;
+            border_passSecret.Visibility = Visibility.Visible;
+        }
+
+        private void button_back_Click(object sender, RoutedEventArgs e)
         {
             stackpanel_auth.Visibility = Visibility.Visible;
             stackpanel_regist.Visibility = Visibility.Collapsed;

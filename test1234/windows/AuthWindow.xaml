@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:test1234.windows"
+        xmlns:l="clr-namespace:test1234.classes"
         mc:Ignorable="d"
         Title="AuthWindow" Height="500" Width="720"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Loaded="Window_Loaded">
+    <Window.Resources>
+        <l:TextToPasswordConverter x:Key="PasswordConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -17,14 +21,14 @@
         </Grid.ColumnDefinitions>
 
         <Grid.Background>
-            <ImageBrush ImageSource="..\img\Frame 3 (1).jpg"
+            <ImageBrush ImageSource="..\img\background.jpg"
                         Stretch="UniformToFill"/>
         </Grid.Background>
 
 
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
-            <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Style TargetType="Button" BasedOn="{StaticResource BorderedButtonStyle}">
                 <Setter Property="Foreground" Value="White"/>
             </Style>
             <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
@@ -55,8 +59,9 @@
             <StackPanel Orientation="Vertical"
                     VerticalAlignment="Center"
                     Grid.Column="1"
-                        Visibility="Collapsed"
+                        Visibility="Visible"
                         x:Name="stackpanel_auth">
+
                 <TextBlock Text="Авторизация"
                        HorizontalAlignment="Center"
                        FontWeight="Bold"
@@ -79,13 +84,55 @@
                        FontWeight="Bold"
                        FontSize="20"
                        Margin="5"/>
-                <TextBox 
-                         TextWrapping="NoWrap"
-                         MaxLength="50"
-                         MaxLines="1"
-                         FontSize="20"
-                         Tag="Пароль"
-                         x:Name="textbox_pass"/>
+                <StackPanel>
+                    <Border BorderThickness="3"
+                            BorderBrush="White"
+                            CornerRadius="20"
+                            Visibility="Visible"
+                            x:Name="border_passSecret">
+                        <Border.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.4"/>
+                        </Border.Background>
+                        <PasswordBox Height="45"
+                                     MaxLength="50"
+                                     FontSize="20"
+                                     x:Name="textbox_pass"
+                                     BorderThickness="0"
+                                     Margin="20 0 20 0"
+                                     VerticalContentAlignment="Center"
+                                     Foreground="White"
+                                     Background="Transparent">
+                        </PasswordBox>
+                    </Border>
+                    <Border BorderThickness="3"
+                            BorderBrush="White"
+                            CornerRadius="20"
+                            Visibility="Collapsed"
+                            x:Name="border_passVisib">
+                        <Border.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.4"/>
+                        </Border.Background>
+                        <TextBox Background="Transparent"
+                                 Height="45"
+                                 MaxLength="50"
+                                 FontSize="20"
+                                 x:Name="textbox_textpass"
+                                 BorderThickness="0"
+                                 Margin="0"
+                                 VerticalContentAlignment="Center"
+                                 Text="{Binding ElementName=textbox_pass, Path=Password, Mode=TwoWay}">
+                        </TextBox>
+                    </Border>
+                    <CheckBox Content="Показать пароль"
+                              FontSize="18"
+                              VerticalContentAlignment="Center"
+                              Foreground="White"
+                              Margin="0 5"
+                              x:Name="checkbox_showPass"
+                              Checked="checkbox_showPass_Checked"
+                              Unchecked="checkbox_showPass_Unchecked">
+                    </CheckBox>
+                </StackPanel>
                 <Button Content="Вход"
                         Height="40"
                         FontSize="20"
@@ -132,7 +179,7 @@
             <StackPanel Orientation="Vertical"
                     VerticalAlignment="Center"
                     Grid.Column="1"
-                        Visibility="Visible"
+                        Visibility="Collapsed"
                         x:Name="stackpanel_regist">
                 <TextBlock Text="Регистрация"
                        HorizontalAlignment="Center"
@@ -142,8 +189,7 @@
                 <TextBlock Text="Логин*"
                        HorizontalAlignment="Left"
                        FontWeight="Bold"
-                       FontSize="20"
-                       Margin="5"/>
+                       FontSize="20"/>
                 <TextBox 
                          TextWrapping="NoWrap"
                          MaxLength="50"
@@ -154,8 +200,7 @@
                 <TextBlock Text="Пароль*"
                        HorizontalAlignment="Left"
                        FontWeight="Bold"
-                       FontSize="20"
-                       Margin="5"/>
+                       FontSize="20"/>
                 <TextBox
                          TextWrapping="NoWrap"
                          MaxLength="50"
@@ -166,8 +211,7 @@
                 <TextBlock Text="Почта"
                        HorizontalAlignment="Left"
                        FontWeight="Bold"
-                       FontSize="20"
-                       Margin="5"/>
+                       FontSize="20"/>
                 <TextBox
                          TextWrapping="NoWrap"
                          MaxLength="50"
@@ -175,28 +219,53 @@
                          FontSize="20"
                          Tag="Пароль"
                          x:Name="textbox_newemail"/>
-                <Button Content="Вход"
+                <StackPanel Orientation="Horizontal"
+                            Margin="10"
+                            HorizontalAlignment="Center">
+                    <Button Content="Назад"
+                            Margin="20 0"
                         Height="40"
                         FontSize="20"
                         VerticalContentAlignment="Center"
-                        Margin="10"
+                        Click="button_back_Click"
+                        BorderThickness="2"
+                        BorderBrush="White"
+                        Width="100"
+                        Name="button_back"
+                        Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type ButtonBase}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" Value="Gray"/>
+                                        <Setter Property="BorderThickness" Value="2"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Content="Регистрация"
+                        Height="40"
+                        FontSize="20"
+                        VerticalContentAlignment="Center"
                         Click="button_regist_Click"
                         BorderThickness="2"
                         BorderBrush="White"
                         Width="150"
                         Name="button_regist"
                         Template="{StaticResource NoMouseOverButtonTemplate}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type ButtonBase}">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="BorderBrush" Value="Gray"/>
-                                    <Setter Property="BorderThickness" Value="2"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                        <Button.Resources>
+                            <Style TargetType="{x:Type ButtonBase}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" Value="Gray"/>
+                                        <Setter Property="BorderThickness" Value="2"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Grid>

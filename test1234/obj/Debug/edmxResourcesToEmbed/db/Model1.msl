@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="Хранилище OnlineCinema_dataModelContainer" CdmEntityContainer="OnlineCinemaEntities">
+  <EntityContainerMapping StorageEntityContainer="Хранилище OnlineCinema_dataModelContainer" CdmEntityContainer="OnlineCinema_dataEntities">
     <EntitySetMapping Name="Country">
       <EntityTypeMapping TypeName="OnlineCinema_dataModel.Country">
         <MappingFragment StoreEntitySet="Country">
@@ -91,6 +91,7 @@
           <ScalarProperty Name="DeathDate" ColumnName="DeathDate" />
           <ScalarProperty Name="BirthCountryId" ColumnName="BirthCountryId" />
           <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+          <ScalarProperty Name="PhotoLink" ColumnName="PhotoLink" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -108,7 +109,7 @@
       <EntityTypeMapping TypeName="OnlineCinema_dataModel.SeriesEpisode">
         <MappingFragment StoreEntitySet="SeriesEpisode">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+          <ScalarProperty Name="SeasonId" ColumnName="SeasonId" />
           <ScalarProperty Name="EpisodeNumber" ColumnName="EpisodeNumber" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="EnTitle" ColumnName="EnTitle" />
@@ -137,16 +138,6 @@
         <MappingFragment StoreEntitySet="StaffRole">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Title" ColumnName="Title" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="StarReview">
-      <EntityTypeMapping TypeName="OnlineCinema_dataModel.StarReview">
-        <MappingFragment StoreEntitySet="StarReview">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserViewId" ColumnName="UserViewId" />
-          <ScalarProperty Name="StarAmount" ColumnName="StarAmount" />
-          <ScalarProperty Name="ReviewTime" ColumnName="ReviewTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -180,6 +171,16 @@
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="RegistDate" ColumnName="RegistDate" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ProfilePhotoLink" ColumnName="ProfilePhotoLink" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserFavorite">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.UserFavorite">
+        <MappingFragment StoreEntitySet="UserFavorite">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -189,11 +190,104 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="FilmId" ColumnName="FilmId" />
-          <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
-          <ScalarProperty Name="ViewDate" ColumnName="ViewDate" />
+          <ScalarProperty Name="ViewTime" ColumnName="ViewTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="View_FilmProduction">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.View_FilmProduction">
+        <MappingFragment StoreEntitySet="View_FilmProduction">
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="PhotoLink" ColumnName="PhotoLink" />
+          <ScalarProperty Name="ActorRole" ColumnName="ActorRole" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_UserItemViems">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.View_UserItemViems">
+        <MappingFragment StoreEntitySet="View_UserItemViems">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PromoPosterLink" ColumnName="PromoPosterLink" />
+          <ScalarProperty Name="ViewTime" ColumnName="ViewTime" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_UserReviews">
+      <EntityTypeMapping TypeName="OnlineCinema_dataModel.View_UserReviews">
+        <MappingFragment StoreEntitySet="View_UserReviews">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="FilmTitle" ColumnName="FilmTitle" />
+          <ScalarProperty Name="PromoPosterLink" ColumnName="PromoPosterLink" />
+          <ScalarProperty Name="ReviewTitle" ColumnName="ReviewTitle" />
+          <ScalarProperty Name="ReviewText" ColumnName="ReviewText" />
+          <ScalarProperty Name="ReviewTime" ColumnName="ReviewTime" />
+          <ScalarProperty Name="ProfilePhotoLink" ColumnName="ProfilePhotoLink" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ReviewId" ColumnName="ReviewId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionName="Хранилище OnlineCinema_dataModel.Func_GetGenreFilms" FunctionImportName="Func_GetGenreFilms">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineCinema_dataModel.Func_GetGenreFilms_Result">
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="Хранилище OnlineCinema_dataModel.Func_GetUserReviews" FunctionImportName="Func_GetUserReviews">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineCinema_dataModel.Func_GetUserReviews_Result">
+          <ScalarProperty Name="ReviewTime" ColumnName="ReviewTime" />
+          <ScalarProperty Name="ReviewTitle" ColumnName="ReviewTitle" />
+          <ScalarProperty Name="ReviewText" ColumnName="ReviewText" />
+          <ScalarProperty Name="PromoPosterLink" ColumnName="PromoPosterLink" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="Хранилище OnlineCinema_dataModel.Func_GetUserViewHitory" FunctionImportName="Func_GetUserViewHitory">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineCinema_dataModel.Func_GetUserViewHitory_Result">
+          <ScalarProperty Name="ViewTime" ColumnName="ViewTime" />
+          <ScalarProperty Name="PromoPosterLink" ColumnName="PromoPosterLink" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="EnTitle" ColumnName="EnTitle" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="Хранилище OnlineCinema_dataModel.Function_UserWatch" FunctionImportName="Function_UserWatch">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineCinema_dataModel.Function_UserWatch_Result">
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="EnTitle" ColumnName="EnTitle" />
+          <ScalarProperty Name="AgeRestriction" ColumnName="AgeRestriction" />
+          <ScalarProperty Name="WorldPremiereDate" ColumnName="WorldPremiereDate" />
+          <ScalarProperty Name="PromoPosterLink" ColumnName="PromoPosterLink" />
+          <ScalarProperty Name="LastWatch" ColumnName="LastWatch" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionName="Хранилище OnlineCinema_dataModel.View_UserWatch" FunctionImportName="View_UserWatch">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OnlineCinema_dataModel.View_UserWatch_Result">
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="EnTitle" ColumnName="EnTitle" />
+          <ScalarProperty Name="AgeRestriction" ColumnName="AgeRestriction" />
+          <ScalarProperty Name="WorldPremiereDate" ColumnName="WorldPremiereDate" />
+          <ScalarProperty Name="PromoPosterLink" ColumnName="PromoPosterLink" />
+          <ScalarProperty Name="LastWatch" ColumnName="LastWatch" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище OnlineCinema_dataModel.sp_alterdiagram" />
     <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище OnlineCinema_dataModel.sp_creatediagram" />
     <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище OnlineCinema_dataModel.sp_dropdiagram" />

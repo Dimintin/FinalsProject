@@ -10,5 +10,6 @@
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("db/model1.context.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("db/model1.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("img/stage%20with%20wall%20of%20light%20-%20animation%20footage%20background.mp4")]
 
 

@@ -15,10 +15,10 @@ namespace test1234.db
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class OnlineCinemaEntities : DbContext
+    public partial class OnlineCinema_dataEntities : DbContext
     {
-        public OnlineCinemaEntities()
-            : base("name=OnlineCinemaEntities")
+        public OnlineCinema_dataEntities()
+            : base("name=OnlineCinema_dataEntities")
         {
         }
     
@@ -40,11 +40,64 @@ namespace test1234.db
         public virtual DbSet<SeriesEpisode> SeriesEpisode { get; set; }
         public virtual DbSet<SeriesSeason> SeriesSeason { get; set; }
         public virtual DbSet<StaffRole> StaffRole { get; set; }
-        public virtual DbSet<StarReview> StarReview { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TextReview> TextReview { get; set; }
         public virtual DbSet<UserData> UserData { get; set; }
+        public virtual DbSet<UserFavorite> UserFavorite { get; set; }
         public virtual DbSet<UserView> UserView { get; set; }
+        public virtual DbSet<View_FilmProduction> View_FilmProduction { get; set; }
+        public virtual DbSet<View_UserItemViems> View_UserItemViems { get; set; }
+        public virtual DbSet<View_UserReviews> View_UserReviews { get; set; }
+    
+        [DbFunction("OnlineCinema_dataEntities", "Func_GetGenreFilms")]
+        public virtual IQueryable<Func_GetGenreFilms_Result> Func_GetGenreFilms(string setGenre)
+        {
+            var setGenreParameter = setGenre != null ?
+                new ObjectParameter("SetGenre", setGenre) :
+                new ObjectParameter("SetGenre", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Func_GetGenreFilms_Result>("[OnlineCinema_dataEntities].[Func_GetGenreFilms](@SetGenre)", setGenreParameter);
+        }
+    
+        [DbFunction("OnlineCinema_dataEntities", "Func_GetUserReviews")]
+        public virtual IQueryable<Func_GetUserReviews_Result> Func_GetUserReviews(Nullable<int> setUserID)
+        {
+            var setUserIDParameter = setUserID.HasValue ?
+                new ObjectParameter("SetUserID", setUserID) :
+                new ObjectParameter("SetUserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Func_GetUserReviews_Result>("[OnlineCinema_dataEntities].[Func_GetUserReviews](@SetUserID)", setUserIDParameter);
+        }
+    
+        [DbFunction("OnlineCinema_dataEntities", "Func_GetUserViewHitory")]
+        public virtual IQueryable<Func_GetUserViewHitory_Result> Func_GetUserViewHitory(Nullable<int> setUserID)
+        {
+            var setUserIDParameter = setUserID.HasValue ?
+                new ObjectParameter("SetUserID", setUserID) :
+                new ObjectParameter("SetUserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Func_GetUserViewHitory_Result>("[OnlineCinema_dataEntities].[Func_GetUserViewHitory](@SetUserID)", setUserIDParameter);
+        }
+    
+        [DbFunction("OnlineCinema_dataEntities", "Function_UserWatch")]
+        public virtual IQueryable<Function_UserWatch_Result> Function_UserWatch(Nullable<System.DateTime> startDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Function_UserWatch_Result>("[OnlineCinema_dataEntities].[Function_UserWatch](@StartDate)", startDateParameter);
+        }
+    
+        [DbFunction("OnlineCinema_dataEntities", "View_UserWatch")]
+        public virtual IQueryable<View_UserWatch_Result> View_UserWatch(Nullable<System.DateTime> startDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<View_UserWatch_Result>("[OnlineCinema_dataEntities].[View_UserWatch](@StartDate)", startDateParameter);
+        }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

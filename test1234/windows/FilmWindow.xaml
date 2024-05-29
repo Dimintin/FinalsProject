@@ -6,17 +6,26 @@
         xmlns:local="clr-namespace:test1234.windows"
         xmlns:l="clr-namespace:test1234.classes"
         mc:Ignorable="d"
-        Title="FilmWindow" Height="1024" Width="1440"
+        Title="FilmWindow" Height="1724" Width="1440"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         WindowState="Maximized"
-        WindowStyle="SingleBorderWindow">
+        WindowStyle="SingleBorderWindow"
+        Loaded="Window_Loaded">
     <Window.Resources>
         <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
         <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}"/>
-        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Template" Value="{StaticResource NoMouseOverButtonTemplate}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="LightGray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <l:PercentValueConverter x:Key="PercentConverter"/>
         <l:UpperToLowerCaseConverter x:Key="UpperCaseConverter"/>
-        <l:nullTextValueToDefaultConverter x:Key="ToDefaultValueConverter"/>
+        <l:nullTextValueToDefaultConverter x:Key="nullToTextConverter"/>
     </Window.Resources>
 
     <Grid ScrollViewer.CanContentScroll="True"
@@ -39,7 +48,7 @@
         -->
 
         <Grid.Background>
-            <ImageBrush ImageSource="..\img\Frame 3 (1).jpg"
+            <ImageBrush ImageSource="..\img\background.jpg"
                         Stretch="UniformToFill"/>
         </Grid.Background>
 
@@ -122,61 +131,84 @@
                 </DockPanel>
             </Grid>
 
-            <StackPanel Height="50"
-                        Margin="30 20 0 0"
-                        Orientation="Horizontal"
-                        MouseLeftButtonUp="StackPanel_MouseLeftButtonUp"
-                    Grid.ColumnSpan="2"
-                    Grid.Row="1"
-                    VerticalAlignment="Top">
-                <Image Source="/img/icons8-go-back-24.png"
-                       Height="30"/>
-                <TextBlock Text="Назад"
-                           FontWeight="DemiBold"
-                           VerticalAlignment="Center"
-                           Margin="10"
-                           FontSize="25">
-                    <TextBlock.Resources>
-                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="TextBlock.Foreground" Value="LightGray"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Resources>
-                </TextBlock>
-            </StackPanel>
-
             <Grid x:Name="grid_mainData"
               Grid.Row="1"
               Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="15*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="9*"/>
                 </Grid.RowDefinitions>
+                <DockPanel Grid.Column="1"
+                        Grid.Row="0">
+                    <StackPanel Orientation="Horizontal"
+                                DockPanel.Dock="Left"
+                                MouseLeftButtonDown="StackPanel_MouseLeftButtonUp">
+                        <Image Source="/img/icons8-go-back-24.png"
+                                Height="30"
+                                DockPanel.Dock="Left"/>
+                        <TextBlock Text="Назад"
+                           FontWeight="DemiBold"
+                           VerticalAlignment="Center"
+                           Margin="10"
+                           FontSize="25">
+                            <TextBlock.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="TextBlock.Foreground" Value="LightGray"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Resources>
+                        </TextBlock>
+                    </StackPanel>
+                    <Button HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            DockPanel.Dock="Right"
+                            Height="40"
+                            Width="40"
+                            Template="{StaticResource NoMouseOverButtonTemplate}"
+                            ToolTip="В избранное"
+                            Click="button_filmToFav_Click"
+                            x:Name="button_filmToFav">
+                        <Image Source="/img/icons8-heart-hollow-48.png"
+                               Name="image_favIcon"/>
+                    </Button>
+                </DockPanel>
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Hidden"
-                          Grid.Column="1"
+                          Grid.Column="0"
+                              Grid.ColumnSpan="3"
                           Grid.Row="1"
                           x:Name="scrollViewer_dataScroller">
                     <StackPanel Orientation="Vertical"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                                Grid.Column="1">
+                            VerticalAlignment="Top">
                         <StackPanel Orientation="Horizontal"
                                 x:Name="stackPanel_filmData"
                                 HorizontalAlignment="Center">
-                            <Image Margin="40 0"
+                            <StackPanel Margin="40 20">
+                                <Image
                                    Name="image_filmPoster"
-                                   MaxHeight="400"
-                                   MaxWidth="280"
-                                   SnapsToDevicePixels="True"/>
+                                   MaxHeight="360"
+                                   MaxWidth="240"
+                                   SnapsToDevicePixels="True"
+                                        Margin="0 20"/>
+                                <Button Height="40"
+                                        Content="Просмотр"
+                                        MaxWidth="300"
+                                        Margin="10 30"
+                                        Padding="20 0"
+                                        Style="{StaticResource BorderedButtonStyle}"
+                                        x:Name="button_watchButton"
+                                        Click="button_watchButton_Click">
+                                </Button>
+                            </StackPanel>
                             <StackPanel>
                                 <TextBlock Name="textblock_filmTitle"
                                        Text="НАЗВАНИЕ"
@@ -211,6 +243,7 @@
                                         <TextBlock Text="Жанры:"/>
                                         <TextBlock Text="Премьера в мире:"/>
                                         <TextBlock Text="Премьера в России:"/>
+                                        <TextBlock Text="Бюджет:"/>
                                     </StackPanel>
                                     <StackPanel>
                                         <StackPanel.Resources>
@@ -223,92 +256,324 @@
                                         <TextBlock Name="textblock_genrese"/>
                                         <TextBlock Name="textblock_worldPremiere"/>
                                         <TextBlock Name="textblock_russiaPremiere"/>
+                                        <TextBlock Name="textblock_budget"/>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
-                        <DockPanel>
-                            <StackPanel Orientation="Vertical"
-                                        DockPanel.Dock="Left"
-                                Margin="0 40"
-                                Name="stackPanel_filmPromoes">
-                                <TextBlock Text="Трейлеры"/>
-                                <Separator Background="White"/>
-                                <ListView Name="listview_trailer"
-                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                        <TextBlock x:Name="textblock_FullDescription"
+                                   TextWrapping="Wrap"
+                                   Margin="80 10"
+                                       DockPanel.Dock="Left"/>
+                        
+                        
+                        <StackPanel Margin="80 10" 
+                                       x:Name="stackpanel_production"
+                                    Visibility="Collapsed">
+                            <TextBlock Text="Съемочная команда"
+                                       FontSize="25"
+                                       DockPanel.Dock="Left"/>
+                            <Separator Background="White"/>
+                        <ListView d:ItemsSource="{d:SampleData ItemCount=10}"
+                                  x:Name="listView_production"
+                                  ItemsSource="{Binding StaffRole}">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                MinHeight="150">
+                                        <StackPanel.Resources>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                        </StackPanel.Resources>
+                                        <Image Source="{Binding PhotoLink}"
+                                               Width="80"
+                                               Height="120"/>
+                                        <StackPanel Margin="10 10"
+                                                    MaxWidth="230">
+                                            <TextBlock Text="{Binding FullName}"
+                                                       TextWrapping="WrapWithOverflow"
+                                                       MaxHeight="45"/>
+                                            <TextBlock Text="{Binding Title}"
+                                                       TextWrapping="WrapWithOverflow"
+                                                       MaxHeight="26"
+                                                       Margin="0 10"/>
+                                            <TextBlock Text="{Binding ActorRole}"
+                                                       Foreground="LightGray"
+                                                       TextWrapping="WrapWithOverflow"
+                                                       MaxHeight="45"/>
+                                        </StackPanel>
+                                        <!--<ListView ItemsSource="{Binding FilmProductionStaff}">
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical"/>
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.Resources>
+                                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                                        </Grid.Resources>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding UserId}"
+                                                                       Margin="0 0 10 0"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>-->
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical"
+                                    Margin="80 0"
+                                    Visibility="Collapsed"
+                                    Name="stackPanel_filmSeries">
+                            <TextBlock Text="Серии и сезоны"/>
+                            <Separator Background="White"/>
+                            <StackPanel>
+                                <ListView d:ItemsSource="{d:SampleData ItemCount=5}"
+                                      Name="listView_filmSeriesSeason"
+                                          ItemsSource="{Binding SeriesSeason}"
                                           ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                          Background="{x:Null}"
-                                          d:ItemsSource="{d:SampleData ItemCount=2}"
-                                          HorizontalAlignment="Center"
-                                          BorderThickness="0">
+                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                                     <ListView.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Vertical"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Top">
-                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal"/>
                                         </ItemsPanelTemplate>
                                     </ListView.ItemsPanel>
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Grid>
-                                                <Grid.Resources>
-                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
-                                                </Grid.Resources>
-                                                <DockPanel x:Name="dockPanel_filmData">
-                                                    <!--<MediaElement Source="{Binding Link}"
-                                                                  Width="300"
-                                                                  Height="210"
-                                                                  DockPanel.Dock="Top"
-                                                                  LoadedBehavior="Stop"
-                                                                  />-->
-                                                </DockPanel>
+                                            <Grid Margin="10"
+                                                  VerticalAlignment="Top">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <StackPanel Grid.Row="0"
+                                                            Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding SeasonNum}"
+                                                               FontSize="25">
+                                                        <TextBlock.Resources>
+                                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                                        </TextBlock.Resources>
+                                                    </TextBlock>
+                                                    <TextBlock Text="{Binding Title}"
+                                                               Margin="10 0"
+                                                               FontSize="25">
+                                                        <TextBlock.Resources>
+                                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                                        </TextBlock.Resources>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                                <ListView d:ItemsSource="{d:SampleData ItemCount=5}"
+                                                          Name="listView_filmSeriesEpisode"
+                                                          ItemsSource="{Binding SeriesEpisode}"
+                                                          Grid.Row="1">
+                                                    <ListView.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Vertical"/>
+                                                        </ItemsPanelTemplate>
+                                                    </ListView.ItemsPanel>
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding EpisodeNumber, StringFormat={}{0}.}">
+                                                                    <TextBlock.Resources>
+                                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                                                    </TextBlock.Resources>
+                                                                </TextBlock>
+                                                                <TextBlock Text="{Binding Title}"
+                                                                           Margin="10 0">
+                                                                    <TextBlock.Resources>
+                                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                                                    </TextBlock.Resources>
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
                                             </Grid>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
                             </StackPanel>
-                            <TextBlock x:Name="textblock_FullDescription"
-                                   TextWrapping="Wrap"
-                                   Margin="20 40 20 0"
-                                       DockPanel.Dock="Left"/>
-                        </DockPanel>
-                        <StackPanel Orientation="Vertical"
-                                Margin="0 40"
-                                Name="stackPanel_filmSeries"
-                                Visibility="Collapsed">
-                            <TextBlock Text="Серии и сезоны"/>
-                            <Separator Background="White"/>
                         </StackPanel>
+                        
+                        
                         <StackPanel Orientation="Vertical"
-                                Margin="0 40"
+                                Margin="80 40"
                                 Name="stackPanel_filmReviews">
-                            <TextBlock Text="Обзоры"/>
+                            <DockPanel>
+                                <TextBlock Text="Рецензии пользователей"
+                                       FontSize="25"
+                                           DockPanel.Dock="Left"/>
+                                <Button DockPanel.Dock="Right"
+                                        HorizontalAlignment="Right"
+                                        Visibility="Collapsed"
+                                        Padding="5"
+                                        x:Name="button_editReview"
+                                        Click="button_editReview_Click"
+                                        Height="40"
+                                        Width="50"
+                                        Margin="10 0 0 0">
+                                    <Button.Resources>
+                                        <Style TargetType="Button" BasedOn="{StaticResource BorderedButtonStyle}"/>
+                                    </Button.Resources>
+                                    <Image Source="/img/icons8-edit-64.png"/>
+                                </Button>
+                                <Button DockPanel.Dock="Right"
+                                        HorizontalAlignment="Right"
+                                        Padding="5 0"
+                                        IsEnabled="False"
+                                        Content="+"
+                                        FontSize="25"
+                                        VerticalContentAlignment="Center"
+                                        Height="40"
+                                        Width="50"
+                                        x:Name="button_createReview"
+                                        Click="button_createReview_Click">
+                                    <Button.Resources>
+                                        <Style TargetType="Button" BasedOn="{StaticResource BorderedButtonStyle}"/>
+                                    </Button.Resources>
+                                </Button>
+                            </DockPanel>
                             <Separator Background="White"/>
-                            <ListView x:Name="listview_textReview">
+
+                            <Grid x:Name="grid_review"
+                                  Visibility="Collapsed">
+                                <StackPanel>
+                                    <TextBlock Text="Заголовок"
+                                               FontSize="25"
+                                               Margin="0 10"/>
+                                    <TextBox MaxLines="2"
+                                             MaxLength="150"
+                                             TextWrapping="WrapWithOverflow"
+                                             x:Name="textbox_reviewTitle">
+                                        <TextBox.Background>
+                                            <SolidColorBrush Color="Black" Opacity="0.4"/>
+                                        </TextBox.Background>
+                                    </TextBox>
+                                    <TextBlock Text="Реценезия"
+                                               FontSize="25"
+                                               Margin="0 10"/>
+                                    <TextBox MaxLength="550"
+                                             TextWrapping="Wrap"
+                                             MinHeight="300"
+                                             x:Name="textbox_reviewText"/>
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Right"
+                                                x:Name="stackPanel_saveOrDiscardReview"
+                                                Visibility="Collapsed"
+                                                Margin="0 10">
+                                        <Button Content="Сохранить"
+                                                x:Name="button_postReview"
+                                                Click="button_postReview_Click"
+                                                Padding="10 5"
+                                                Margin="10 0">
+                                            <Button.Resources>
+                                                <Style TargetType="Button" BasedOn="{StaticResource BorderedButtonStyle}"/>
+                                            </Button.Resources>
+                                        </Button>
+                                        <Button x:Name="button_discardReview"
+                                                Click="button_discardReview_Click"
+                                                Height="40">
+                                            <Image Source="/img/icons8-trash-30.png" />
+                                            <Button.Resources>
+                                                <Style TargetType="Button" BasedOn="{StaticResource BorderedButtonStyle}"/>
+                                            </Button.Resources>
+                                        </Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            
+                            <ListView Margin="0 20 0 60"
+                                      MinHeight="50"
+                                      d:ItemsSource="{d:SampleData ItemCount=5}"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                      x:Name="listview_review">
+                                <ListView.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="20"/>
+                                    </Style>
+                                </ListView.Resources>
+                                <ListView.Background>
+                                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                                </ListView.Background>
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
+                                        <StackPanel/>
                                     </ItemsPanelTemplate>
                                 </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid x:Name="grid_reviewItem"
-                                              Width="250">
-                                            <Grid.Resources>
-                                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
-                                            </Grid.Resources>
-                                            <StackPanel>
-                                                <TextBlock FontSize="20"
-                                                           Text="{Binding ReviewTitle}"
-                                                           TextWrapping="WrapWithOverflow"/>
-                                                <TextBlock FontSize="15"
-                                                           Foreground="LightGray"
-                                                           Text="{Binding ReviewTime, Converter={StaticResource ToDefaultValueConverter}, ConverterParameter=dateShort}"
-                                                           TextWrapping="WrapWithOverflow"/>
-                                                <TextBlock FontSize="15"
-                                                           Text="{Binding ReviewText}"
-                                                           TextWrapping="WrapWithOverflow"/>
+                                        <Grid Width="1600"
+                                              Margin="10 10 10 5">
+                                            <Grid.Background>
+                                                <SolidColorBrush Color="LightGray" Opacity="0.2"/>
+                                            </Grid.Background>
+                                            <StackPanel Margin="10"
+                                                        Orientation="Horizontal">
+                                                <StackPanel.Resources>
+                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                                </StackPanel.Resources>
+                                                <Image Source="{Binding PromoPosterLink}"
+                                                        Grid.Column="1"
+                                                        Height="120"
+                                                        Width="100"
+                                                        Margin="10 0"/>
+                                                <StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Border CornerRadius="100"
+                                                                BorderBrush="White"
+                                                                BorderThickness="2"
+                                                                Width="40"
+                                                                Height="40"
+                                                                Margin="5">
+                                                            <Border.Effect>
+                                                                <DropShadowEffect BlurRadius="2"
+                                                                                    Opacity="0.5"
+                                                                                    ShadowDepth="3"/>
+                                                            </Border.Effect>
+                                                            <Border.Background>
+                                                                <ImageBrush Stretch="Fill"
+                                                                            ImageSource="{Binding ProfilePhotoLink}"/>
+                                                            </Border.Background>
+                                                        </Border>
+                                                        <TextBlock FontSize="20"
+                                                               Text="{Binding UserName}"
+                                                               Margin="0 0 0 0"
+                                                               MaxHeight="50"
+                                                               TextWrapping="Wrap"
+                                                                   VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                    <TextBlock FontSize="20"
+                                                               Text="{Binding ReviewTitle}"
+                                                               TextWrapping="WrapWithOverflow"
+                                                               Margin="0 0 10 0"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               MaxHeight="35"/>
+                                                    <TextBlock FontSize="15"
+                                                               Foreground="LightGray"
+                                                               VerticalAlignment="Center"
+                                                               Text="{Binding ReviewTime, Converter={StaticResource nullToTextConverter}, ConverterParameter=dateShort}"/>
+                                                    <TextBlock FontSize="15"
+                                                               Text="{Binding ReviewText}"
+                                                               TextWrapping="WrapWithOverflow"
+                                                               Margin="0 5 0 10"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               MaxHeight="50"
+                                                               MaxWidth="850"
+                                                               HorizontalAlignment="Left"/>
+                                                </StackPanel>
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>
@@ -317,6 +582,9 @@
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
+
+                <!---->
+
             </Grid>
         </Grid>
         <!--
@@ -329,28 +597,60 @@
                 Grid.RowSpan="2"
                 CornerRadius="0 10 10 0"
                 Background="Black"
-                Visibility="Collapsed"
-                Panel.ZIndex="0">
+                Visibility="Collapsed">
             <Grid x:Name="GridBurger">
                 <DockPanel>
-                    <StackPanel HorizontalAlignment="Left"
-                                Orientation="Horizontal"
-                                DockPanel.Dock="Top">
+                    <DockPanel DockPanel.Dock="Top">
                         <Button x:Name="button_closeBurgerMenu"
                                 Height="40"
                                 Width="40"
+                                HorizontalAlignment="Left"
                                 Click="button_closeBurgerMenu_Click"
-                                Margin="30 30 0 0">
+                                Margin="30 30 0 0"
+                                DockPanel.Dock="Left">
                             <Image Source="/img/icons8-close-50.png" />
                         </Button>
-                        <TextBlock x:Name="textblock_"
-                                    Text="{Binding Login}">
-                        </TextBlock>
-                        <Button>
-                            <Image Source="{Binding PhotoLink}"/>
-                        </Button>
-                    </StackPanel>
-
+                        <StackPanel Orientation="Horizontal"
+                                    Height="40"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Right"
+                                    Margin="0 0 30 0"
+                                    MouseLeftButtonUp="button_user_Click">
+                            <TextBlock x:Name="textblock_login"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Text=""
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"
+                                           Margin="10 0"
+                                       MaxWidth="150"
+                                       TextTrimming="CharacterEllipsis"/>
+                            <Border CornerRadius="100"
+            BorderBrush="White"
+            BorderThickness="2"
+            Width="40">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="2"
+                              Opacity="0.5"
+                              ShadowDepth="3"/>
+                                </Border.Effect>
+                                <Border.Background>
+                                    <ImageBrush x:Name="image_profile"
+                        Stretch="Fill">
+                                        <ImageBrush.ImageSource>
+                                            <Binding>
+                                                <Binding.TargetNullValue>
+                                                    <ImageSource>
+                                                        ..\img\icons8-male-user-32.png
+                                                    </ImageSource>
+                                                </Binding.TargetNullValue>
+                                            </Binding>
+                                        </ImageBrush.ImageSource>
+                                    </ImageBrush>
+                                </Border.Background>
+                            </Border>
+                        </StackPanel>
+                    </DockPanel>
 
                     <StackPanel DockPanel.Dock="Top"
                                 Margin="30 20 0 0">
@@ -383,6 +683,16 @@
                                    Text="Сериалы"
                                    Margin="5"
                                    MouseLeftButtonUp="textblock_serieslink_Click"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <Image Source="/img/icons8-heart-filled-48.png"
+                                   Height="30"
+                                   Margin="5"/>
+                            <TextBlock x:Name="textblock_favlink"
+                                   Text="Избранное"
+                                   Margin="5"
+                                   MouseLeftButtonUp="textblock_favlink_Click"/>
                         </StackPanel>
                     </StackPanel>
 

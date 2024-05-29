@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\KAZAK\Desktop\test1234\test1234\obj\Debug\
+C:\Users\KAZAK\Desktop\test\FinalsProject\test1234\obj\Debug\
 test1234
 none
 false
 DEBUG;TRACE
-C:\Users\KAZAK\Desktop\test1234\test1234\App.xaml
-6-1037870201
-22072865281
-38-878082562
-181219551649
-resources\ButtonTheme.xaml;resources\FilmTileDictionary.xaml;windows\AuthWindow.xaml;windows\FilmWindow.xaml;windows\MainWindow.xaml;windows\TotalResultWindow.xaml;
+C:\Users\KAZAK\Desktop\test\FinalsProject\test1234\App.xaml
+61014719708
+3-466665560
+461163421321
+39-422276784
+resources\ButtonTheme.xaml;windows\AuthWindow.xaml;windows\FilmWindow.xaml;windows\MainWindow.xaml;windows\TotalResultWindow.xaml;windows\UserDataWindow.xaml;
 
 False
 

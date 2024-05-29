@@ -15,13 +15,13 @@ namespace test1234.db
     public partial class FilmProductionStaff
     {
         public int Id { get; set; }
-        public Nullable<int> StaffId { get; set; }
-        public Nullable<int> FilmId { get; set; }
-        public Nullable<int> StaffRoleId { get; set; }
+        public int StaffId { get; set; }
+        public int FilmId { get; set; }
+        public int StaffRoleId { get; set; }
         public string ActorRole { get; set; }
     
         public virtual FilmLibrary FilmLibrary { get; set; }
-        public virtual ProductionStaff ProductionStaff { get; set; }
         public virtual StaffRole StaffRole { get; set; }
+        public virtual ProductionStaff ProductionStaff { get; set; }
     }
 }

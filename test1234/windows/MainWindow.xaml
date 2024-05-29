@@ -28,7 +28,7 @@
         
         -->
         <Grid.Background>
-            <ImageBrush ImageSource="..\img\Frame 3 (1).jpg"
+            <ImageBrush ImageSource="..\img\background.jpg"
                         Stretch="UniformToFill"/>
         </Grid.Background>
 
@@ -58,7 +58,7 @@
 
             <Grid Grid.Row="1"
                   Grid.Column="1">
-                <ScrollViewer VerticalScrollBarVisibility="Hidden"
+                <ScrollViewer VerticalScrollBarVisibility="Visible"
                               HorizontalScrollBarVisibility="Disabled"
                               Grid.ColumnSpan="3">
                     <StackPanel Margin="40 40 40 0">
@@ -75,7 +75,8 @@
                             </Grid.ColumnDefinitions>
                             <Button Width="40"
                                         Height="40"
-                                        Click="Left_Click">
+                                        Click="Left_Click"
+                                        Template="{StaticResource NoMouseOverButtonTemplate}">
                                 <Image Source="/img/icons8-go-back-24.png" />
                             </Button>
                             <ListView Name="listview_newItem"
@@ -100,45 +101,53 @@
                                 </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Width="220"
-                                          Height="Auto"
-                                          MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+                                        <Grid Width="240"
+                                              MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="4*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
                                             <Grid.Resources>
                                                 <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
                                             </Grid.Resources>
-                                            <DockPanel x:Name="dockPanel_filmData">
-                                                <Image Source="{Binding PromoPosterLink}"
+                                            <Image Source="{Binding PromoPosterLink}"
                                                    SnapsToDevicePixels="True"
                                                    VerticalAlignment="Top"
                                                    Stretch="Uniform"
                                                    Height="300"
                                                    Width="280"
-                                                   DockPanel.Dock="Top"
-                                                   HorizontalAlignment="Center"/>
-                                                <StackPanel DockPanel.Dock="Bottom"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="5"/>
+                                            <StackPanel DockPanel.Dock="Bottom"
                                                         Orientation="Vertical"
                                                         HorizontalAlignment="Left"
-                                                        Margin="0 10 0 0">
-                                                    <TextBlock Text="{Binding Title}"
+                                                        Margin="0 10 0 0"
+                                                       Grid.Row="1">
+                                                <TextBlock Text="{Binding Title}"
                                                             TextWrapping="WrapWithOverflow"
                                                             TextTrimming="CharacterEllipsis"
-                                                            MaxHeight="60"/>
-                                                    <StackPanel Orientation="Horizontal"
+                                                            MaxHeight="30"/>
+                                                <TextBlock Text="{Binding EnTitle}"
+                                                            TextWrapping="WrapWithOverflow"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            MaxHeight="30"
+                                                           Foreground="LightGray"/>
+                                                <StackPanel Orientation="Horizontal"
                                                             Opacity="0.8">
-                                                        <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource NullToTextConverter}, ConverterParameter=ageRest}"
+                                                    <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource NullToTextConverter}, ConverterParameter=ageRest}"
                                                                 Margin="5 0 0 0"
                                                                 FontWeight="Light"/>
-                                                        <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToTextConverter}, ConverterParameter=releaseYear}"
+                                                    <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToTextConverter}, ConverterParameter=releaseYear}"
                                                                 DockPanel.Dock="Bottom"
                                                                 FontWeight="Light"
                                                                 TextWrapping="Wrap"/>
-                                                    </StackPanel>
                                                 </StackPanel>
-                                            </DockPanel>
+                                            </StackPanel>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
+
                             <Button Width="40"
                                         Height="40"
                                         FontSize="20"
@@ -148,12 +157,12 @@
                                 <Image Source="/img/icons8-circled-right-24.png" />
                             </Button>
                         </Grid>
-                        <TextBlock Text="Новинки"
+                        <!--<TextBlock Text="Популярное"
                                        FontSize="50"
                                        Margin="20 0"/>
                         <Separator Background="White"
                                        Margin="20 30"/>
-                        <Grid>
+                        <Grid Margin="0 0 0 40">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="20*"/>
@@ -161,10 +170,10 @@
                             </Grid.ColumnDefinitions>
                             <Button Width="40"
                                         Height="40"
-                                        Click="Left_Click">
+                                        Click="LeftFav_Click">
                                 <Image Source="/img/icons8-go-back-24.png" />
                             </Button>
-                            <ListView Name="listview_favItem"
+                            <ListView Name="listview_yourItem"
                                   ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                   ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                   Background="{x:Null}"
@@ -188,12 +197,16 @@
                                     <DataTemplate>
                                         <Grid Width="220"
                                           Height="Auto"
-                                          MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+                                          MouseLeftButtonUp="Grid_MouseLeftButtonUp"
+                                              Grid.Row="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="4*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
                                             <Grid.Resources>
                                                 <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
                                             </Grid.Resources>
-                                            <DockPanel x:Name="dockPanel_filmData">
-                                                <Image Source="{Binding PromoPosterLink}"
+                                            <Image Source="{Binding PromoPosterLink}"
                                                    SnapsToDevicePixels="True"
                                                    VerticalAlignment="Top"
                                                    Stretch="Uniform"
@@ -201,26 +214,30 @@
                                                    Width="280"
                                                    DockPanel.Dock="Top"
                                                    HorizontalAlignment="Center"/>
-                                                <StackPanel DockPanel.Dock="Bottom"
+                                            <StackPanel DockPanel.Dock="Bottom"
                                                         Orientation="Vertical"
                                                         HorizontalAlignment="Left"
-                                                        Margin="0 10 0 0">
-                                                    <TextBlock Text="{Binding Title}"
+                                                        Margin="0 10 0 0"
+                                                        Grid.Row="1">
+                                                <TextBlock Text="{Binding Title}"
                                                             TextWrapping="WrapWithOverflow"
                                                             TextTrimming="CharacterEllipsis"
-                                                            MaxHeight="60"/>
-                                                    <StackPanel Orientation="Horizontal"
+                                                            MaxHeight="30"/>
+                                                <TextBlock Text="{Binding EnTitle}"
+                                                            TextWrapping="WrapWithOverflow"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            MaxHeight="30"/>
+                                                <StackPanel Orientation="Horizontal"
                                                             Opacity="0.8">
-                                                        <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource NullToTextConverter}, ConverterParameter=ageRest}"
+                                                    <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource NullToTextConverter}, ConverterParameter=ageRest}"
                                                                 Margin="5 0 0 0"
                                                                 FontWeight="Light"/>
-                                                        <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToTextConverter}, ConverterParameter=releaseYear}"
+                                                    <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToTextConverter}, ConverterParameter=releaseYear}"
                                                                 DockPanel.Dock="Bottom"
                                                                 FontWeight="Light"
                                                                 TextWrapping="Wrap"/>
-                                                    </StackPanel>
                                                 </StackPanel>
-                                            </DockPanel>
+                                            </StackPanel>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -228,11 +245,83 @@
                             <Button Width="40"
                                         Height="40"
                                         FontSize="20"
-                                        Click="Right_Click"
+                                        Click="RightFav_Click"
                                         Grid.Column="2">
                                 <Image Source="/img/icons8-circled-right-24.png" />
                             </Button>
-                        </Grid>
+                        </Grid>-->
+
+                        <Separator Background="White"
+                                       Margin="20 30"/>
+                        <ListView Name="listview_totalItem"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                  Background="{x:Null}"
+                                  d:ItemsSource="{d:SampleData ItemCount=20}"
+                                  HorizontalAlignment="Center"
+                                  HorizontalContentAlignment="Center"
+                                  BorderThickness="0"
+                                  Grid.Column="1">
+                            <ListView.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                            </ListView.Resources>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel HorizontalAlignment="Center"
+                                               VerticalAlignment="Top"
+                                               Width="1200">
+                                    </WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="190"
+                                          Height="Auto"
+                                          MouseLeftButtonUp="Grid_MouseLeftButtonUp"
+                                          Grid.Row="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="4*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.Resources>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
+                                        </Grid.Resources>
+                                        <Image Source="{Binding PromoPosterLink}"
+                                                   SnapsToDevicePixels="True"
+                                                   VerticalAlignment="Top"
+                                                   Stretch="Uniform"
+                                                   Height="300"
+                                                   Width="280"
+                                                   DockPanel.Dock="Top"
+                                                   HorizontalAlignment="Center"/>
+                                        <StackPanel DockPanel.Dock="Bottom"
+                                                        Orientation="Vertical"
+                                                        HorizontalAlignment="Left"
+                                                        Margin="0 10 0 0"
+                                                        Grid.Row="1">
+                                            <TextBlock Text="{Binding Title}"
+                                                            TextWrapping="WrapWithOverflow"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            MaxHeight="30"/>
+                                            <TextBlock Text="{Binding EnTitle}"
+                                                            TextWrapping="WrapWithOverflow"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            MaxHeight="30"/>
+                                            <StackPanel Orientation="Horizontal"
+                                                            Opacity="0.8">
+                                                <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource NullToTextConverter}, ConverterParameter=ageRest}"
+                                                                Margin="5 0 0 0"
+                                                                FontWeight="Light"/>
+                                                <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToTextConverter}, ConverterParameter=releaseYear}"
+                                                                DockPanel.Dock="Bottom"
+                                                                FontWeight="Light"
+                                                                TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
@@ -289,265 +378,7 @@
                 </DockPanel>
             </Grid>
         </Grid>
-
-        <!--<StackPanel Grid.ColumnSpan="3">
-            <Grid Name="grid_main" Height="1008">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="90"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                -->
-        <!--
-                
-                FilmList
-                
-                -->
-        <!--
-                <ScrollViewer Grid.Row="1"
-                              VerticalScrollBarVisibility="Hidden">
-                    <StackPanel x:Name="grid_list">
-                        <StackPanel Grid.ColumnSpan="10"
-                                    Margin="10 10 0 0">
-                            <TextBlock Text="Новинки"
-                                       FontSize="50"
-                                       Margin="20 0"/>
-                            <Separator Background="White"
-                                       Margin="20 30"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="10*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Width="40"
-                                        Height="40"
-                                        Click="Left_Click">
-                                    <Image Source="/img/icons8-go-back-24.png" />
-                                </Button>
-
-                                <ListView Name="listview_newItem"
-                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                          Background="{x:Null}"
-                                          d:ItemsSource="{d:SampleData ItemCount=20}"
-                                          HorizontalAlignment="Left"
-                                          BorderThickness="0"
-                                          Height="400"
-                                          Grid.Column="1">
-                                    <ListView.Resources>
-                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
-                                    </ListView.Resources>
-                                    <ListView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Top">
-
-                                            </StackPanel>
-                                        </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Width="220"
-                                                    Height="Auto"
-                                                    MouseLeftButtonUp="Grid_MouseLeftButtonUp">
-                                                <Grid.Resources>
-                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
-                                                </Grid.Resources>
-                                                <DockPanel x:Name="dockPanel_filmData">
-                                                    <Image Source="{Binding PromoPosterLink}"
-                                                           SnapsToDevicePixels="True"
-                                                           VerticalAlignment="Top"
-                                                           Stretch="Uniform"
-                                                           Height="300"
-                                                           Width="280"
-                                                           DockPanel.Dock="Top"
-                                                           HorizontalAlignment="Center"/>
-                                                    <StackPanel DockPanel.Dock="Bottom"
-                                                                Orientation="Vertical"
-                                                                HorizontalAlignment="Left"
-                                                                Margin="0 10 0 0">
-                                                        <TextBlock Text="{Binding Title}"
-                                                                   TextWrapping="WrapWithOverflow"
-                                                                   TextTrimming="CharacterEllipsis"
-                                                                   MaxHeight="60"/>
-                                                        <StackPanel Orientation="Horizontal"
-                                                                    Opacity="0.8">
-                                                            <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource NullToTextConverter}, ConverterParameter=ageRest}"
-                                                                       Margin="5 0 0 0"
-                                                                       FontWeight="Light"/>
-                                                            <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToTextConverter}, ConverterParameter=releaseYear}"
-                                                                       DockPanel.Dock="Bottom"
-                                                                       FontWeight="Light"
-                                                                       TextWrapping="Wrap"/>
-                                                        </StackPanel>
-                                                    </StackPanel>
-                                                </DockPanel>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                                <Button Width="40"
-                                        Height="40"
-                                        FontSize="20"
-                                        Click="Right_Click"
-                                        Grid.Column="2">
-                                    <Image Source="/img/icons8-circled-right-24.png" />
-                                </Button>
-                            </Grid>
-                        </StackPanel>
-                        <StackPanel Grid.ColumnSpan="10"
-                                    Margin="10 10 0 0">
-                            <TextBlock Text="Новинки"
-                                       FontSize="50"
-                                       Margin="20 0"/>
-                            <Separator Background="White"
-                                       Margin="20 30"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="10*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Width="40"
-                                        Height="40"
-                                        Click="Left_Click">
-                                    <Image Source="/img/icons8-go-back-24.png" />
-                                </Button>
-
-                                <ListView Name="listview_favItem"
-                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                          Background="{x:Null}"
-                                          d:ItemsSource="{d:SampleData ItemCount=20}"
-                                          HorizontalAlignment="Left"
-                                          BorderThickness="0"
-                                          Height="400"
-                                          Grid.Column="1">
-                                    <ListView.Resources>
-                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
-                                    </ListView.Resources>
-                                    <ListView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Top">
-
-                                            </StackPanel>
-                                        </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Width="220"
-                                                    Height="Auto"
-                                                    MouseLeftButtonUp="Grid_MouseLeftButtonUp">
-                                                <Grid.Resources>
-                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/>
-                                                </Grid.Resources>
-                                                <DockPanel x:Name="dockPanel_filmData">
-                                                    <Image Source="{Binding PromoPosterLink}"
-                                                           SnapsToDevicePixels="True"
-                                                           VerticalAlignment="Top"
-                                                           Stretch="Uniform"
-                                                           Height="300"
-                                                           Width="280"
-                                                           DockPanel.Dock="Top"
-                                                           HorizontalAlignment="Center"/>
-                                                    <StackPanel DockPanel.Dock="Bottom"
-                                                                Orientation="Vertical"
-                                                                HorizontalAlignment="Left"
-                                                                Margin="0 10 0 0">
-                                                        <TextBlock Text="{Binding Title}"
-                                                                   TextWrapping="WrapWithOverflow"
-                                                                   TextTrimming="CharacterEllipsis"
-                                                                   MaxHeight="60"/>
-                                                        <StackPanel Orientation="Horizontal"
-                                                                    Opacity="0.8">
-                                                            <TextBlock Text="{Binding AgeRestriction, Converter={StaticResource NullToTextConverter}, ConverterParameter=ageRest}"
-                                                                       Margin="5 0 0 0"
-                                                                       FontWeight="Light"/>
-                                                            <TextBlock Text="{Binding WorldPremiereDate, Converter={StaticResource NullToTextConverter}, ConverterParameter=releaseYear}"
-                                                                       DockPanel.Dock="Bottom"
-                                                                       FontWeight="Light"
-                                                                       TextWrapping="Wrap"/>
-                                                        </StackPanel>
-                                                    </StackPanel>
-                                                </DockPanel>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                                <Button Width="40"
-                                        Height="40"
-                                        FontSize="20"
-                                        Click="Right_Click"
-                                        Grid.Column="2">
-                                    <Image Source="/img/icons8-circled-right-24.png" />
-                                </Button>
-                            </Grid>
-                        </StackPanel>
-                    </StackPanel>
-                </ScrollViewer>
-                -->
-        <!--
-                
-                Top
-                
-                -->
-        <!--
-                <Grid x:Name="grid_top"
-                    Grid.ColumnSpan="2"
-                    Background="Black"
-                    Opacity="0.9"
-                    Grid.Row="0">
-                    <DockPanel>
-                        <Button x:Name="btn_burgeropen"
-                    HorizontalAlignment="Left"
-                    Margin="30 0"
-                    BorderThickness="0"
-                    Background="{x:Null}"
-                    Height="40"
-                    Width="40"
-                    Click="btn_burgeropen_сlick"
-                                DockPanel.Dock="Left">
-                            <Image Source="/img/icons8-menu-50.png"/>
-                        </Button>
-                        <StackPanel Orientation="Horizontal"
-                        Margin="30 20"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center">
-                            <Border BorderThickness="2"
-                                    BorderBrush="White"
-                                    CornerRadius="10">
-                                <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="button_searchDiscardValue"
-                                            Visibility="Collapsed"
-                                            Click="button_searchDiscardValue_Click">
-                                        <Image Source="/img/icons8-close-50.png" 
-                                               Height="30"
-                                               Margin="5"/>
-                                    </Button>
-                                    <TextBox x:Name="textbox_searchBar"
-                                             Width="600"
-                                        MaxLines="1"
-                                        MaxLength="50"
-                                        BorderThickness="0"
-                                             TextChanged="textbox_searchBar_TextChanged"/>
-                                    <Button Name="btn_header_search"
-                                        Height="40"
-                                        Width="40"
-                                        Margin="5"
-                                        Click="btn_header_search_сlick">
-                                        <Image Source="/img/icons8-search-50.png"/>
-                                    </Button>
-                                </StackPanel>
-                            </Border>
-                        </StackPanel>
-                    </DockPanel>
-                </Grid>
-            </Grid>
-        </StackPanel>-->
-
+        
         <!--
         
         BurgerMenu
@@ -569,31 +400,46 @@
                                 Margin="30 30 0 0">
                             <Image Source="/img/icons8-close-50.png" />
                         </Button>
-                        <Button  Height="50" Width="50"
-                                 VerticalAlignment="Bottom"
-                                 Margin="10 10 30 0"
-                                 DockPanel.Dock="Right">
-                            <Image>
-                                <Image.Source>
-                                    <Binding Path="">
-                                        <Binding.TargetNullValue>
-                                            <ImageSource>
-                                                ..\img\icons8-male-user-32.png
-                                            </ImageSource>
-                                        </Binding.TargetNullValue>
-                                    </Binding>
-                                </Image.Source>
-                            </Image>
-                        </Button>
-                        <TextBlock x:Name="textblock_login"
+                        <StackPanel Orientation="Horizontal"
+                                    Height="40"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Right"
+                                    Margin="0 0 30 0"
+                                    MouseLeftButtonUp="button_user_Click">
+                            <TextBlock x:Name="textblock_login"
                                    FontSize="20"
                                    FontWeight="Bold"
-                                   Text="KJUBYBYB"
-                                   VerticalAlignment="Bottom"
-                                   DockPanel.Dock="Right"
-                                   Margin="20 0 0 10"
-                                   HorizontalAlignment="Right">
-                        </TextBlock>
+                                   Text=""
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Right"
+                                       Margin="10 0"
+                                       MaxWidth="150"
+                                       TextTrimming="CharacterEllipsis"/>
+                            <Border CornerRadius="100"
+                                    BorderBrush="White"
+                                    BorderThickness="2"
+                                    Width="40">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="2"
+                                                      Opacity="0.5"
+                                                      ShadowDepth="3"/>
+                                </Border.Effect>
+                                <Border.Background>
+                                    <ImageBrush x:Name="image_profile"
+                                                Stretch="Fill">
+                                        <ImageBrush.ImageSource>
+                                            <Binding>
+                                                <Binding.TargetNullValue>
+                                                    <ImageSource>
+                                                        ..\img\icons8-male-user-32.png
+                                                    </ImageSource>
+                                                </Binding.TargetNullValue>
+                                            </Binding>
+                                        </ImageBrush.ImageSource>
+                                    </ImageBrush>
+                                </Border.Background>
+                            </Border>
+                        </StackPanel>
                     </DockPanel>
 
 
@@ -629,6 +475,16 @@
                                    Margin="5"
                                    MouseLeftButtonUp="textblock_serieslink_Click"/>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <Image Source="/img/icons8-heart-filled-48.png"
+                                   Height="30"
+                                   Margin="5"/>
+                            <TextBlock x:Name="textblock_favlink"
+                                   Text="Избранное"
+                                   Margin="5"
+                                   MouseLeftButtonUp="textblock_favlink_MouseLeftButtonUp"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <Separator DockPanel.Dock="Top"
@@ -642,6 +498,7 @@
                               ScrollViewer.VerticalScrollBarVisibility="Hidden"
                               Margin="30 0 0 0"
                               DockPanel.Dock="Top"
+                              ScrollViewer.CanContentScroll="False"
                               MouseLeftButtonUp="TextBlock_MouseLeftButtonUp">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>

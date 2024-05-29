@@ -17,6 +17,7 @@ namespace test1234.db
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserData()
         {
+            this.UserFavorite = new HashSet<UserFavorite>();
             this.UserView = new HashSet<UserView>();
         }
     
@@ -25,7 +26,10 @@ namespace test1234.db
         public string Password { get; set; }
         public System.DateTime RegistDate { get; set; }
         public string Email { get; set; }
+        public string ProfilePhotoLink { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserFavorite> UserFavorite { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserView> UserView { get; set; }
     }
