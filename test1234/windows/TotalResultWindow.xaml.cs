@@ -401,7 +401,7 @@ namespace test1234.windows
             _filmCollection.Clear();
             foreach (var item in EF.Context.UserFavorite.Where(i => i.UserId == ActiveUser.activeUser.Id).ToList())
             {
-                _filmCollection.Add(EF.Context.FilmLibrary.Where(i => i.Id == item.Id).FirstOrDefault());
+                _filmCollection.Add(EF.Context.FilmLibrary.Where(i => i.Id == item.FilmId).FirstOrDefault());
             }
             textblock_resultTitle.Text = "Избранное";
             currentPageIndex = 0;
